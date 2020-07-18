@@ -1,5 +1,6 @@
 VERSION 5.00
 Object = "{5E9E78A0-531B-11CF-91F6-C2863C385E30}#1.0#0"; "MSFLXGRD.OCX"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
 Begin VB.Form frmMain 
    Caption         =   "PartCat Order Importer"
    ClientHeight    =   7455
@@ -10,6 +11,13 @@ Begin VB.Form frmMain
    ScaleHeight     =   7455
    ScaleWidth      =   7110
    StartUpPosition =   3  'Windows Default
+   Begin MSComDlg.CommonDialog dlgCommon 
+      Left            =   3600
+      Top             =   960
+      _ExtentX        =   847
+      _ExtentY        =   847
+      _Version        =   393216
+   End
    Begin VB.Frame fraComponent 
       Caption         =   "Component"
       Height          =   5175
@@ -282,6 +290,30 @@ Attribute VB_Exposed = False
 '''
 ''' Author: Nathan Campos <nathan@innoveworkshop.com>
 Option Explicit
+
+' Browse for order file.
+Private Sub cmdBrowseOrder_Click()
+    ' Setup open dialog.
+    dlgCommon.DialogTitle = "Import Distributor Order File"
+    dlgCommon.DefaultExt = "csv"
+    dlgCommon.Filter = "Comma Separated Files (*.csv)|*.csv|All Files (*.*)|*.*"
+    dlgCommon.ShowOpen
+    
+    ' Set the path.
+    txtOrderLocation.Text = dlgCommon.FileName
+End Sub
+
+' Browe for PartCat workspace.
+Private Sub cmdBrowseWorkspace_Click()
+    ' Setup open dialog.
+    dlgCommon.DialogTitle = "Select PartCat Workspace"
+    dlgCommon.DefaultExt = "pcw"
+    dlgCommon.Filter = "PartCat Workspace (*.pcw)|*.pcw|All Files (*.*)|*.*"
+    dlgCommon.ShowOpen
+    
+    ' Set the path.
+    txtWorkspace.Text = dlgCommon.FileName
+End Sub
 
 ' Form just loaded.
 Private Sub Form_Load()
