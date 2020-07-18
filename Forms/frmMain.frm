@@ -199,7 +199,7 @@ Begin VB.Form frmMain
          Width           =   375
       End
       Begin VB.Label Label3 
-         Caption         =   "Workspace Export Location:"
+         Caption         =   "Component Export Location:"
          Height          =   255
          Left            =   120
          TabIndex        =   8
@@ -312,7 +312,7 @@ Private Sub cmdBrowseWorkspace_Click()
     dlgCommon.ShowOpen
     
     ' Set the path.
-    txtWorkspace.Text = dlgCommon.FileName
+    txtWorkspace.Text = GetComponentsDir(dlgCommon.FileName)
 End Sub
 
 ' Form just loaded.
