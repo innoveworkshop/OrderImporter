@@ -315,6 +315,11 @@ Private Sub cmdBrowseWorkspace_Click()
     txtWorkspace.Text = GetComponentsDir(dlgCommon.FileName)
 End Sub
 
+' Import the order file.
+Private Sub cmdImport_Click()
+    ParseFarnellOrder txtOrderLocation.Text
+End Sub
+
 ' Form just loaded.
 Private Sub Form_Load()
     ' Setup the Flex Grid.
