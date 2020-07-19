@@ -5,11 +5,9 @@ Attribute VB_Name = "modFarnell"
 ''' Author: Nathan Campos <nathan@innoveworkshop.com>
 Option Explicit
 
-Private CSVParser As ICSVParser
-
 ' Parse the Farnell order CSV file.
 Public Sub ParseFarnellOrder(strPath As String)
-    Dim strCSV() As String
+    Dim astrOrders() As String
     Dim lngRows As Long
     Dim lngCols As Long
     Dim hndFile As Integer
@@ -22,12 +20,13 @@ Public Sub ParseFarnellOrder(strPath As String)
     Close #hndFile
 
     ' Actually parse the CSV file.
-    ParseCSV strContents, strCSV, lngCols, lngRows
+    ParseCSV strContents, astrOrders, lngCols, lngRows
 
     ' Debug output.
     Dim idx As Long
-    For idx = 0 To UBound(strCSV)
-        Debug.Print "Row " & (idx \ lngCols), "Column " & (idx Mod lngCols), _
-            "Data: " & strCSV(idx)
+    For idx = 0 To UBound(astrOrders)
+        Debug.Print "Index " & idx, "Row " & (idx \ lngCols), _
+            "Column " & (idx Mod lngCols), "Data: " & astrOrders(idx)
     Next idx
+    Debug.Print "Rows: " & lngRows, "Cols: " & lngCols
 End Sub
