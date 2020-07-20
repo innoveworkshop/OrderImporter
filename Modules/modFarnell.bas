@@ -62,11 +62,4 @@ Public Sub ParseFarnellOrder(strPath As String)
                          CLng(astrOrder(idxRow * lngCols + colQuantity))
         End If
     Next idxRow
-    
-    ' Check how all the components were added.
-    Dim cmpComponent As Component
-    For idxRow = 0 To LastComponentIndex
-        Set cmpComponent = GetComponent(idxRow)
-        Debug.Print idxRow, cmpComponent.Name
-    Next idxRow
 End Sub
