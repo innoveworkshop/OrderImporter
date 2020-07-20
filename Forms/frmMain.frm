@@ -312,6 +312,9 @@ Public Sub ShowComponent(lngIndex As Long)
     txtName.Text = component.Name
     txtQuantity.Text = CStr(component.Quantity)
     txtNotes.Text = component.Notes
+    
+    ' Enable the component panel for editing.
+    fraComponent.Enabled = True
 End Sub
 
 ' Browse for order file.
@@ -380,6 +383,9 @@ Private Sub Form_Load()
     grdProperties.TextMatrix(0, 1) = "Value"
     grdProperties.ColWidth(0) = (grdProperties.Width / 2) - 45
     grdProperties.ColWidth(1) = (grdProperties.Width / 2) - 45
+    
+    ' Disable the component panel.
+    fraComponent.Enabled = False
 End Sub
 
 ' Exits the application.
