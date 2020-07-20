@@ -22,7 +22,12 @@ Private m_strName As String
 Private m_lngQuantity As Long
 Private m_strNotes As String
 Private m_strDatasheet As String
-Private m_strProperties As String
+Private m_astrProperties() As String
+
+' Initializes the properties array.
+Public Sub InitializeProperties(intSize As Integer)
+    ReDim m_astrProperties(intSize)
+End Sub
 
 ' Name getter.
 Public Property Get Name() As String
@@ -64,12 +69,17 @@ Public Property Let Datasheet(strDatasheet As String)
     m_strDatasheet = strDatasheet
 End Property
 
-' Properties getter.
-Public Property Get Properties() As String
-    Properties = m_strProperties
+' Property getter.
+Public Property Get Property(intIndex As Integer) As String
+    Property = m_astrProperties(intIndex)
 End Property
 
-' Properties setter.
-Public Property Let Properties(strProperties As String)
-    m_strProperties = strProperties
+' Property setter.
+Public Property Let Property(intIndex As Integer, strProperty As String)
+    m_astrProperties(intIndex) = strProperty
+End Property
+
+' Properties getter.
+Public Property Get Properties() As String()
+    Properties = m_astrProperties
 End Property

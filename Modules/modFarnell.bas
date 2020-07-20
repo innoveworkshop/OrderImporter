@@ -52,13 +52,22 @@ Public Sub ParseFarnellOrder(strPath As String)
     
     ' Populate components array.
     Dim idxRow As Long
+    Dim strDescription As String
+    Dim astrProperties() As String
     For idxRow = 1 To (lngRows - 1)
         ' Skip empty rows.
         If astrOrder(idxRow * lngCols + colQuantity) <> "" Then
+            ' Separate description from properties.
+            strDescription = astrOrder(idxRow * lngCols + colDescription)
+            If strDescription <> "" Then
+                astrProperties = Split(Mid(strDescription, InStr(strDescription, ";") + 2), ";")
+                strDescription = Left(strDescription, InStr(strDescription, ";") - 1)
+            End If
+            
             ' Add component to the array.
             AddComponent astrOrder(idxRow * lngCols + colMfgPartNumber), _
-                         astrOrder(idxRow * lngCols + colDescription), _
-                         astrOrder(idxRow * lngCols + colDescription), _
+                         strDescription, _
+                         astrProperties, _
                          CLng(astrOrder(idxRow * lngCols + colQuantity))
         End If
     Next idxRow
