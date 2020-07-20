@@ -291,6 +291,29 @@ Attribute VB_Exposed = False
 ''' Author: Nathan Campos <nathan@innoveworkshop.com>
 Option Explicit
 
+' Imports an order into the system.
+Public Sub ImportOrder()
+    ' Parse order and populate the components array.
+    ParseFarnellOrder txtOrderLocation.Text
+    
+    ' Update the components record counter and show the first component.
+    lblNumberItems.Caption = "of " & LastComponentIndex
+    ShowComponent 0
+End Sub
+
+' Shows a component by its index.
+Public Sub ShowComponent(lngIndex As Long)
+    ' Get the component.
+    Dim component As component
+    Set component = GetComponent(lngIndex)
+    
+    ' Set text fields.
+    txtItemNumber.Text = CStr(lngIndex)
+    txtName.Text = component.Name
+    txtQuantity.Text = CStr(component.Quantity)
+    txtNotes.Text = component.Notes
+End Sub
+
 ' Browse for order file.
 Private Sub cmdBrowseOrder_Click()
     ' Setup open dialog.
@@ -315,9 +338,39 @@ Private Sub cmdBrowseWorkspace_Click()
     txtWorkspace.Text = GetComponentsDir(dlgCommon.FileName)
 End Sub
 
+' Go to the first component in the records.
+Private Sub cmdFirst_Click()
+    ShowComponent 0
+End Sub
+
 ' Import the order file.
 Private Sub cmdImport_Click()
-    ParseFarnellOrder txtOrderLocation.Text
+    ImportOrder
+End Sub
+
+' Go to the last component in the records.
+Private Sub cmdLast_Click()
+    ShowComponent LastComponentIndex
+End Sub
+
+' Go to the next component in the records.
+Private Sub cmdNext_Click()
+    Dim lngCurrentIndex As Long
+    
+    lngCurrentIndex = CLng(txtItemNumber.Text)
+    If lngCurrentIndex < LastComponentIndex Then
+        ShowComponent lngCurrentIndex + 1
+    End If
+End Sub
+
+' Go to the previous component in the records.
+Private Sub cmdPrevious_Click()
+    Dim lngCurrentIndex As Long
+    
+    lngCurrentIndex = CLng(txtItemNumber.Text)
+    If lngCurrentIndex > 0 Then
+        ShowComponent lngCurrentIndex - 1
+    End If
 End Sub
 
 ' Form just loaded.
