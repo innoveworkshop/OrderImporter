@@ -313,6 +313,12 @@ Public Sub ShowComponent(lngIndex As Long)
     txtQuantity.Text = CStr(component.Quantity)
     txtNotes.Text = component.Notes
     
+    ' Populate the properties.
+    Dim intIndex As Integer
+    For intIndex = 0 To UBound(component.Properties)
+        Debug.Print component.Property(intIndex)
+    Next intIndex
+    
     ' Enable the component panel for editing.
     fraComponent.Enabled = True
 End Sub
