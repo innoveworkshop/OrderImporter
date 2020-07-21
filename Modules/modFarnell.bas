@@ -60,7 +60,8 @@ Public Sub ParseFarnellOrder(strPath As String)
             ' Separate description from properties.
             strDescription = astrOrder(idxRow * lngCols + colDescription)
             If strDescription <> "" Then
-                astrProperties = Split(Mid(strDescription, InStr(strDescription, ";") + 2), ";")
+                strDescription = Replace(strDescription, ":", ": ")
+                astrProperties = Split(Mid(strDescription, InStr(strDescription, ";") + 2), "; ")
                 strDescription = Left(strDescription, InStr(strDescription, ";") - 1)
             End If
             
