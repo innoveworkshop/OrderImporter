@@ -29,6 +29,34 @@ Public Sub InitializeProperties(intSize As Integer)
     ReDim m_astrProperties(intSize)
 End Sub
 
+' Removes invalid properties from the properties array.
+Public Sub RemoveInvalidProperties()
+    Dim astrTemp() As String
+    Dim intCountValid As Integer
+    Dim intIndex As Integer
+    
+    ' Count valid properties.
+    intCountValid = 0
+    For intIndex = 0 To UBound(m_astrProperties)
+        If InStr(m_astrProperties(intIndex), ":") <> 0 Then
+            intCountValid = intCountValid + 1
+        End If
+    Next intIndex
+    
+    ' Go through adding valid items to the array.
+    astrTemp = m_astrProperties
+    ReDim m_astrProperties(intCountValid)
+    Dim intNewIndex As Integer
+    intNewIndex = 0
+    For intIndex = 0 To UBound(astrTemp)
+        If InStr(astrTemp(intIndex), ":") <> 0 Then
+            m_astrProperties(intNewIndex) = astrTemp(intIndex)
+        End If
+        
+        intNewIndex = intNewIndex + 1
+    Next intIndex
+End Sub
+
 ' Name getter.
 Public Property Get Name() As String
     Name = m_strName
