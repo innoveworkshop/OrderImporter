@@ -115,7 +115,24 @@ End Property
 
 ' Property setter.
 Public Property Let Property(intIndex As Integer, strProperty As String)
-    m_astrProperties(intIndex) = strProperty
+    Dim astrProperty() As String
+    astrProperty = Split(strProperty, ": ")
+    
+    ' Looks like this will just be another invalid property...
+    If UBound(astrProperty) < 1 Then
+        m_astrProperties(intIndex) = strProperty
+        Exit Property
+    End If
+    
+    ' Remove invalid characters from property key.
+    astrProperty(0) = Replace(astrProperty(0), "'", "")
+    astrProperty(0) = Replace(astrProperty(0), "(", "")
+    astrProperty(0) = Replace(astrProperty(0), ")", "")
+    astrProperty(0) = Replace(astrProperty(0), "@", "")
+    astrProperty(0) = Replace(astrProperty(0), "%", "")
+    astrProperty(0) = Replace(astrProperty(0), ".", "")
+    
+    m_astrProperties(intIndex) = astrProperty(0) & ": " & astrProperty(1)
 End Property
 
 ' Properties getter.
