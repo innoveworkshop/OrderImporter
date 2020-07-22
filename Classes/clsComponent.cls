@@ -45,7 +45,7 @@ Public Sub RemoveInvalidProperties()
     
     ' Go through adding valid items to the array.
     astrTemp = m_astrProperties
-    ReDim m_astrProperties(intCountValid)
+    ReDim m_astrProperties(intCountValid - 1)
     Dim intNewIndex As Integer
     intNewIndex = 0
     For intIndex = 0 To UBound(astrTemp)
