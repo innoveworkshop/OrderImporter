@@ -369,6 +369,14 @@ Private Sub cmdLast_Click()
     ShowComponent LastComponentIndex
 End Sub
 
+' Opens the component distributor website with a search in place.
+Private Sub cmdLoadWebsite_Click()
+    Dim component As component
+    Set component = GetComponent(CLng(txtItemNumber.Text))
+    
+    OpenURL "https://pt.farnell.com/search?st=" & component.SearchCode
+End Sub
+
 ' Go to the next component in the records.
 Private Sub cmdNext_Click()
     Dim lngCurrentIndex As Long
