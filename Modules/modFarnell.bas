@@ -69,7 +69,8 @@ Public Sub ParseFarnellOrder(strPath As String)
             AddComponent astrOrder(idxRow * lngCols + colMfgPartNumber), _
                          strDescription, _
                          astrProperties, _
-                         CLng(astrOrder(idxRow * lngCols + colQuantity))
+                         CLng(astrOrder(idxRow * lngCols + colQuantity)), _
+                         astrOrder(idxRow * lngCols + colOrderCode)
         End If
     Next idxRow
 End Sub

@@ -18,7 +18,7 @@ End Sub
 ' Adds a component to the array.
 Public Sub AddComponent(strName As String, strNotes As String, _
                         ByRef astrProperties() As String, _
-                        lngQuantity As Long)
+                        lngQuantity As Long, strSearchCode As String)
     ' Increment the last component index and instantiate a new component.
     m_idxLastComponent = m_idxLastComponent + 1
     Set m_arrComponents(m_idxLastComponent) = New component
@@ -28,6 +28,7 @@ Public Sub AddComponent(strName As String, strNotes As String, _
         .Name = strName
         .Notes = strNotes
         .Quantity = lngQuantity
+        .SearchCode = strSearchCode
     End With
     
     ' Set the component properties.

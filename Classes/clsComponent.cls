@@ -23,6 +23,7 @@ Private m_lngQuantity As Long
 Private m_strNotes As String
 Private m_strDatasheet As String
 Private m_astrProperties() As String
+Private m_strSearchCode As String
 
 ' Initializes the properties array.
 Public Sub InitializeProperties(intSize As Integer)
@@ -106,6 +107,16 @@ End Property
 ' Datasheet setter.
 Public Property Let Datasheet(strDatasheet As String)
     m_strDatasheet = strDatasheet
+End Property
+
+' Search code getter.
+Public Property Get SearchCode() As String
+    SearchCode = m_strSearchCode
+End Property
+
+' Search code setter.
+Public Property Let SearchCode(strSearchCode As String)
+    m_strSearchCode = strSearchCode
 End Property
 
 ' Property getter.
