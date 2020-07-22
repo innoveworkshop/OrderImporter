@@ -38,7 +38,7 @@ Public Sub RemoveInvalidProperties()
     ' Count valid properties.
     intCountValid = 0
     For intIndex = 0 To UBound(m_astrProperties)
-        If InStr(m_astrProperties(intIndex), ":") <> 0 Then
+        If IsPropertyLineValid(m_astrProperties(intIndex)) Then
             intCountValid = intCountValid + 1
         End If
     Next intIndex
@@ -49,13 +49,24 @@ Public Sub RemoveInvalidProperties()
     Dim intNewIndex As Integer
     intNewIndex = 0
     For intIndex = 0 To UBound(astrTemp)
-        If InStr(astrTemp(intIndex), ":") <> 0 Then
+        If IsPropertyLineValid(astrTemp(intIndex)) Then
             m_astrProperties(intNewIndex) = astrTemp(intIndex)
+            intNewIndex = intNewIndex + 1
         End If
-        
-        intNewIndex = intNewIndex + 1
     Next intIndex
 End Sub
+
+' Checks if a property line is valid.
+Private Function IsPropertyLineValid(strLine As String) As Boolean
+    If InStr(strLine, ":") <> 0 Then
+        If Right(strLine, 1) <> "-" Then
+            IsPropertyLineValid = True
+            Exit Function
+        End If
+    End If
+    
+    IsPropertyLineValid = False
+End Function
 
 ' Name getter.
 Public Property Get Name() As String
