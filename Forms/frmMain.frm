@@ -313,10 +313,17 @@ Public Sub ShowComponent(lngIndex As Long)
     txtQuantity.Text = CStr(component.Quantity)
     txtNotes.Text = component.Notes
     
+    ' Preparate the grid for the properties.
+    grdProperties.Rows = UBound(component.Properties) + 2
+    
     ' Populate the properties.
     Dim intIndex As Integer
+    Dim strProperty() As String
     For intIndex = 0 To UBound(component.Properties)
         Debug.Print component.Property(intIndex)
+        strProperty = Split(component.Property(intIndex), ": ")
+        grdProperties.TextMatrix(intIndex + 1, 0) = strProperty(0)
+        grdProperties.TextMatrix(intIndex + 1, 1) = strProperty(1)
     Next intIndex
     
     ' Enable the component panel for editing.
