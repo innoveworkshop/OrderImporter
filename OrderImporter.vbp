@@ -9,6 +9,7 @@ Module=modConstants; Modules\modConstants.bas
 Module=modPartCat; Modules\modPartCat.bas
 Module=modCSVParser; Libraries\modCSVParser.bas
 Class=Component; Classes\clsComponent.cls
+Module=modOpenURL; Modules\modOpenURL.bas
 IconForm="frmMain"
 Startup="frmMain"
 Command32=""
