@@ -318,12 +318,12 @@ Public Sub ShowComponent(lngIndex As Long)
     
     ' Populate the properties.
     Dim intIndex As Integer
-    Dim strProperty() As String
+    Dim astrProperty() As String
     For intIndex = 0 To UBound(component.Properties)
         Debug.Print component.Property(intIndex)
-        strProperty = Split(component.Property(intIndex), ": ")
-        grdProperties.TextMatrix(intIndex + 1, 0) = strProperty(0)
-        grdProperties.TextMatrix(intIndex + 1, 1) = strProperty(1)
+        astrProperty = Split(component.Property(intIndex), ": ")
+        grdProperties.TextMatrix(intIndex + 1, 0) = astrProperty(0)
+        grdProperties.TextMatrix(intIndex + 1, 1) = astrProperty(1)
     Next intIndex
     
     ' Enable the component panel for editing.
