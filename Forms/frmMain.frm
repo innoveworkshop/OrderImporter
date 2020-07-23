@@ -25,6 +25,33 @@ Begin VB.Form frmMain
       TabIndex        =   12
       Top             =   1080
       Width           =   6855
+      Begin VB.CommandButton cmdAddPackage 
+         Height          =   615
+         Left            =   6000
+         Picture         =   "frmMain.frx":0000
+         Style           =   1  'Graphical
+         TabIndex        =   32
+         Top             =   3960
+         Width           =   735
+      End
+      Begin VB.CommandButton cmdAddSubCategory 
+         Height          =   615
+         Left            =   6000
+         Picture         =   "frmMain.frx":030A
+         Style           =   1  'Graphical
+         TabIndex        =   31
+         Top             =   3240
+         Width           =   735
+      End
+      Begin VB.CommandButton cmdAddCategory 
+         Height          =   615
+         Left            =   6000
+         Picture         =   "frmMain.frx":074C
+         Style           =   1  'Graphical
+         TabIndex        =   30
+         Top             =   2520
+         Width           =   735
+      End
       Begin VB.CheckBox chkExported 
          Caption         =   "Exported"
          Enabled         =   0   'False
@@ -95,8 +122,8 @@ Begin VB.Form frmMain
          Left            =   120
          TabIndex        =   19
          Top             =   2520
-         Width           =   6615
-         _ExtentX        =   11668
+         Width           =   5775
+         _ExtentX        =   10186
          _ExtentY        =   3625
          _Version        =   393216
          FixedCols       =   0
@@ -217,9 +244,9 @@ Begin VB.Form frmMain
       Begin VB.ComboBox cmbDistributor 
          Height          =   315
          Index           =   0
-         ItemData        =   "frmMain.frx":0000
+         ItemData        =   "frmMain.frx":0B8E
          Left            =   4320
-         List            =   "frmMain.frx":0007
+         List            =   "frmMain.frx":0B95
          TabIndex        =   5
          Text            =   "Farnell"
          Top             =   480
@@ -319,12 +346,16 @@ Public Sub ShowComponent(lngIndex As Long)
     ' Populate the properties.
     Dim intIndex As Integer
     Dim astrProperty() As String
-    For intIndex = 0 To UBound(component.Properties)
-        Debug.Print component.Property(intIndex)
-        astrProperty = Split(component.Property(intIndex), ": ")
-        grdProperties.TextMatrix(intIndex + 1, 0) = astrProperty(0)
-        grdProperties.TextMatrix(intIndex + 1, 1) = astrProperty(1)
-    Next intIndex
+    If UBound(component.Properties) > 0 Then
+        For intIndex = 0 To UBound(component.Properties)
+            astrProperty = Split(component.Property(intIndex), ": ")
+            grdProperties.TextMatrix(intIndex + 1, 0) = astrProperty(0)
+            grdProperties.TextMatrix(intIndex + 1, 1) = astrProperty(1)
+        Next intIndex
+    Else
+        grdProperties.TextMatrix(1, 0) = ""
+        grdProperties.TextMatrix(1, 1) = ""
+    End If
     
     ' Enable the component panel for editing.
     fraComponent.Enabled = True
