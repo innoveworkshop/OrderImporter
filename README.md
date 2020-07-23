@@ -3,6 +3,7 @@
 The easiest way to import a whole distributor order into a
 [PartCat](https://github.com/innoveworkshop/PartCat) workspace.
 
+![Screenshot](/Screenshots/2020-07-23.png)
 
 ## Supported Distributors
 
