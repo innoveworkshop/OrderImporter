@@ -34,12 +34,15 @@ Public Sub AddComponent(strName As String, strNotes As String, _
     ' Set the component properties.
     Dim intIndex As Integer
     m_arrComponents(m_idxLastComponent).InitializeProperties UBound(astrProperties)
-    For intIndex = 0 To UBound(astrProperties)
-        m_arrComponents(m_idxLastComponent).Property(intIndex) = astrProperties(intIndex)
-    Next intIndex
-    
-    ' Remove the invalid component properties.
-    m_arrComponents(m_idxLastComponent).RemoveInvalidProperties
+    If UBound(astrProperties) > 0 Then
+        ' Set properties.
+        For intIndex = 0 To UBound(astrProperties)
+            m_arrComponents(m_idxLastComponent).Property(intIndex) = astrProperties(intIndex)
+        Next intIndex
+        
+        ' Remove the invalid component properties.
+        m_arrComponents(m_idxLastComponent).RemoveInvalidProperties
+    End If
 End Sub
 
 ' Gets a component from the components array.

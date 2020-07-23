@@ -59,7 +59,11 @@ Public Sub ParseFarnellOrder(strPath As String)
         If astrOrder(idxRow * lngCols + colQuantity) <> "" Then
             ' Separate description from properties.
             strDescription = astrOrder(idxRow * lngCols + colDescription)
-            If strDescription <> "" Then
+            If strDescription = "" Then
+                ' Looks like the description field is empty.
+                ReDim astrProperties(0)
+            Else
+                ' Separate the properties from the description.
                 strDescription = Replace(strDescription, ":", ": ")
                 astrProperties = Split(Mid(strDescription, InStr(strDescription, ";") + 2), "; ")
                 strDescription = Left(strDescription, InStr(strDescription, ";") - 1)
