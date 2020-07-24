@@ -99,6 +99,27 @@ Private Function IsPropertyLineValid(strLine As String) As Boolean
     IsPropertyLineValid = False
 End Function
 
+' Removes invalid file characters from a string, making it filename-safe.
+Public Static Function RemoveInvalidFileCharacters(strName As String) As String
+    Dim strBuffer As String
+    strBuffer = strName
+    
+    ' Remove invalid characters.
+    strBuffer = Replace(strBuffer, ".", "")
+    strBuffer = Replace(strBuffer, "<", "")
+    strBuffer = Replace(strBuffer, ">", "")
+    strBuffer = Replace(strBuffer, ":", "")
+    strBuffer = Replace(strBuffer, """", "")
+    strBuffer = Replace(strBuffer, "/", "")
+    strBuffer = Replace(strBuffer, "\", "")
+    strBuffer = Replace(strBuffer, "|", "")
+    strBuffer = Replace(strBuffer, "?", "")
+    strBuffer = Replace(strBuffer, "*", "")
+    
+    ' Trim whitespace and return.
+    RemoveInvalidFileCharacters = Trim(strBuffer)
+End Function
+
 ' Name getter.
 Public Property Get Name() As String
     Name = m_strName
@@ -106,7 +127,7 @@ End Property
 
 ' Name setter.
 Public Property Let Name(strName As String)
-    m_strName = strName
+    m_strName = RemoveInvalidFileCharacters(strName)
 End Property
 
 ' Quantity getter.
