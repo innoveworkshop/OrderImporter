@@ -368,6 +368,18 @@ Public Function GetCurrentComponent() As component
     Set GetCurrentComponent = GetComponent(CLng(txtItemNumber.Text))
 End Function
 
+' Saves the text fields to the current component.
+Public Sub SaveCurrentComponent()
+    Dim component As component
+    Set component = GetCurrentComponent
+    
+    ' Save the component text fields.
+    component.Name = txtName.Text
+    component.Notes = txtNotes.Text
+    component.Datasheet = txtDatasheetURL.Text
+    component.Quantity = CLng(txtQuantity.Text)
+End Sub
+
 ' Add a category to the properties
 Private Sub cmdAddCategory_Click()
     Dim strCategory As String
@@ -380,6 +392,7 @@ Private Sub cmdAddCategory_Click()
     ' Check if the user entered something and add the property.
     If strCategory <> "" Then
         component.AddProperty "Category", strCategory
+        SaveCurrentComponent
         ShowComponent CLng(txtItemNumber.Text)
     End If
 End Sub
@@ -396,6 +409,7 @@ Private Sub cmdAddPackage_Click()
     ' Check if the user entered something and add the property.
     If strPackage <> "" Then
         component.AddProperty "Package", strPackage
+        SaveCurrentComponent
         ShowComponent CLng(txtItemNumber.Text)
     End If
 End Sub
@@ -413,6 +427,7 @@ Private Sub cmdAddSubCategory_Click()
     ' Check if the user entered something and add the property.
     If strSubCategory <> "" Then
         component.AddProperty "Sub-Category", strSubCategory
+        SaveCurrentComponent
         ShowComponent CLng(txtItemNumber.Text)
     End If
 End Sub
@@ -441,8 +456,15 @@ Private Sub cmdBrowseWorkspace_Click()
     txtWorkspace.Text = GetComponentsDir(dlgCommon.FileName)
 End Sub
 
+' Export component to a workspace.
+Private Sub cmdExport_Click()
+    ' Don't forget to save any changes.
+    SaveCurrentComponent
+End Sub
+
 ' Go to the first component in the records.
 Private Sub cmdFirst_Click()
+    SaveCurrentComponent
     ShowComponent 0
 End Sub
 
@@ -453,6 +475,7 @@ End Sub
 
 ' Go to the last component in the records.
 Private Sub cmdLast_Click()
+    SaveCurrentComponent
     ShowComponent LastComponentIndex
 End Sub
 
@@ -470,6 +493,7 @@ Private Sub cmdNext_Click()
     
     lngCurrentIndex = CLng(txtItemNumber.Text)
     If lngCurrentIndex < LastComponentIndex Then
+        SaveCurrentComponent
         ShowComponent lngCurrentIndex + 1
     End If
 End Sub
@@ -480,6 +504,7 @@ Private Sub cmdPrevious_Click()
     
     lngCurrentIndex = CLng(txtItemNumber.Text)
     If lngCurrentIndex > 0 Then
+        SaveCurrentComponent
         ShowComponent lngCurrentIndex - 1
     End If
 End Sub
