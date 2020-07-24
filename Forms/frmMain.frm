@@ -341,6 +341,13 @@ Public Sub ShowComponent(lngIndex As Long)
     txtQuantity.Text = CStr(component.Quantity)
     txtNotes.Text = component.Notes
     
+    ' Set the exported checkbox.
+    If component.Exported Then
+        chkExported.Value = vbChecked
+    Else
+        chkExported.Value = vbUnchecked
+    End If
+    
     ' Preparate the grid for the properties.
     grdProperties.Rows = UBound(component.Properties) + 2
     
@@ -458,8 +465,7 @@ End Sub
 
 ' Export component to a workspace.
 Private Sub cmdExport_Click()
-    ' Don't forget to save any changes.
-    SaveCurrentComponent
+    Dim component As component
     
     ' Check if there's an output folder selected.
     If txtWorkspace.Text = "" Then
@@ -467,6 +473,14 @@ Private Sub cmdExport_Click()
             vbOKOnly + vbInformation, "No Export Workspace Selected"
         Exit Sub
     End If
+    
+    ' Don't forget to save any changes and get the current component as well.
+    SaveCurrentComponent
+    Set component = GetCurrentComponent
+    
+    ' Set the component as exported.
+    component.Exported = True
+    ShowComponent CLng(txtItemNumber.Text)
 End Sub
 
 ' Go to the first component in the records.
