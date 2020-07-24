@@ -30,6 +30,15 @@ Public Sub InitializeProperties(intSize As Integer)
     ReDim m_astrProperties(intSize)
 End Sub
 
+' Adds a property to the array.
+Public Sub AddProperty(strKey As String, strValue)
+    If UBound(m_astrProperties) > 0 Then
+        ReDim Preserve m_astrProperties(UBound(m_astrProperties) + 1)
+    End If
+    
+    m_astrProperties(UBound(m_astrProperties)) = strKey & ": " & strValue
+End Sub
+
 ' Removes invalid properties from the properties array.
 Public Sub RemoveInvalidProperties()
     Dim astrTemp() As String
