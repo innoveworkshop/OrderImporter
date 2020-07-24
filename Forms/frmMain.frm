@@ -347,19 +347,74 @@ Public Sub ShowComponent(lngIndex As Long)
     ' Populate the properties.
     Dim intIndex As Integer
     Dim astrProperty() As String
-    If UBound(component.Properties) > 0 Then
-        For intIndex = 0 To UBound(component.Properties)
+    For intIndex = 0 To UBound(component.Properties)
+        ' Check if the property is populated.
+        If component.Property(intIndex) <> "" Then
             astrProperty = Split(component.Property(intIndex), ": ")
             grdProperties.TextMatrix(intIndex + 1, 0) = astrProperty(0)
             grdProperties.TextMatrix(intIndex + 1, 1) = astrProperty(1)
-        Next intIndex
-    Else
-        grdProperties.TextMatrix(1, 0) = ""
-        grdProperties.TextMatrix(1, 1) = ""
-    End If
+        Else
+            grdProperties.TextMatrix(1, 0) = ""
+            grdProperties.TextMatrix(1, 1) = ""
+        End If
+    Next intIndex
     
     ' Enable the component panel for editing.
     fraComponent.Enabled = True
+End Sub
+
+' Gets the currently selected component.
+Public Function GetCurrentComponent() As component
+    Set GetCurrentComponent = GetComponent(CLng(txtItemNumber.Text))
+End Function
+
+' Add a category to the properties
+Private Sub cmdAddCategory_Click()
+    Dim strCategory As String
+    Dim component As component
+    
+    ' Get the category from the user.
+    Set component = GetCurrentComponent
+    strCategory = InputBox("Component category:", "Set the component category")
+    
+    ' Check if the user entered something and add the property.
+    If strCategory <> "" Then
+        component.AddProperty "Category", strCategory
+        ShowComponent CLng(txtItemNumber.Text)
+    End If
+End Sub
+
+' Add a package to the properties.
+Private Sub cmdAddPackage_Click()
+    Dim strPackage As String
+    Dim component As component
+    
+    ' Get the package from the user.
+    Set component = GetCurrentComponent
+    strPackage = InputBox("Component package:", "Set the component package")
+    
+    ' Check if the user entered something and add the property.
+    If strPackage <> "" Then
+        component.AddProperty "Package", strPackage
+        ShowComponent CLng(txtItemNumber.Text)
+    End If
+End Sub
+
+' Add a sub-category to the properties.
+Private Sub cmdAddSubCategory_Click()
+    Dim strSubCategory As String
+    Dim component As component
+    
+    ' Get the sub-category from the user.
+    Set component = GetCurrentComponent
+    strSubCategory = InputBox("Component sub-category:", _
+        "Set the component sub-category")
+    
+    ' Check if the user entered something and add the property.
+    If strSubCategory <> "" Then
+        component.AddProperty "Sub-Category", strSubCategory
+        ShowComponent CLng(txtItemNumber.Text)
+    End If
 End Sub
 
 ' Browse for order file.
@@ -404,7 +459,7 @@ End Sub
 ' Opens the component distributor website with a search in place.
 Private Sub cmdLoadWebsite_Click()
     Dim component As component
-    Set component = GetComponent(CLng(txtItemNumber.Text))
+    Set component = GetCurrentComponent
     
     OpenURL "https://pt.farnell.com/search?st=" & component.SearchCode
 End Sub
