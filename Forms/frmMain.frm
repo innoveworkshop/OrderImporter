@@ -570,6 +570,26 @@ Private Sub grdProperties_DblClick()
     End If
 End Sub
 
+' Check for keypresses on the properties grid.
+Private Sub grdProperties_KeyDown(KeyCode As Integer, Shift As Integer)
+    Dim strKey As String
+    Dim component As component
+    
+    ' Delete a property for the user.
+    If KeyCode = vbKeyDelete Then
+        ' Get component and selected key.
+        Set component = GetCurrentComponent
+        strKey = grdProperties.TextMatrix(grdProperties.Row, 0)
+        
+        ' Actually delete the property.
+        component.DeleteProperty strKey
+        
+        ' Save component changes and reload the view.
+        SaveCurrentComponent
+        ShowComponent CLng(txtItemNumber.Text)
+    End If
+End Sub
+
 ' Exits the application.
 Private Sub mniFileExit_Click()
     Unload Me

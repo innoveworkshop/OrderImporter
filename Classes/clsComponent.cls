@@ -60,6 +60,43 @@ Public Sub EditProperty(strKey As String, strValue As String)
         vbOKOnly + vbCritical, "Property Key Not Found"
 End Sub
 
+' Deletes a property from the array.
+Public Sub DeleteProperty(strKey As String)
+    Dim astrBuffer() As String
+    Dim intIndex As Integer
+    Dim intOffset As Integer
+    
+    ' Check if we are deleting the last available property.
+    If UBound(m_astrProperties) = 0 Then
+        ReDim m_astrProperties(0)
+        Exit Sub
+    End If
+    
+    ' Populate the buffer array.
+    intOffset = 0
+    ReDim astrBuffer(UBound(m_astrProperties) - 1)
+    For intIndex = 0 To UBound(m_astrProperties)
+        ' Check if we should delete the property.
+        If InStr(m_astrProperties(intIndex), strKey & ":") Then
+            ' Add offset to the index.
+            intOffset = -1
+        Else
+            If intIndex = 0 Then
+                intOffset = 0
+            End If
+            
+            ' Copy a non-deleted property
+            astrBuffer(intIndex + intOffset) = m_astrProperties(intIndex)
+        End If
+    Next intIndex
+    
+    ' Copy the buffer to the actual properties array.
+    ReDim m_astrProperties(UBound(astrBuffer))
+    For intIndex = 0 To UBound(m_astrProperties)
+        m_astrProperties(intIndex) = astrBuffer(intIndex)
+    Next intIndex
+End Sub
+
 ' Removes invalid properties from the properties array.
 Public Sub RemoveInvalidProperties()
     Dim astrTemp() As String
