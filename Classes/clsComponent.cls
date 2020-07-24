@@ -31,6 +31,46 @@ Public Sub InitializeProperties(intSize As Integer)
     ReDim m_astrProperties(intSize)
 End Sub
 
+' Export the component to a root path where the folder will be placed in.
+Public Sub Export(strPath As String)
+    Dim strFolder As String
+    Dim hndFile As Integer
+    
+    ' Build folder path and check if it already exists.
+    strFolder = strPath & Name & "\"
+    If Dir(strFolder, vbDirectory) <> "" Then
+        MsgBox "Component folder already exists.", vbOKOnly + vbCritical, _
+            "Component Already Exists"
+        Exit Sub
+    End If
+    
+    ' Create the component folder.
+    MkDir strFolder
+    
+    ' Write manifest.
+    hndFile = FreeFile
+    Open strFolder & MANIFEST_FILE For Output As #hndFile
+        Dim intIndex As Integer
+        For intIndex = 0 To UBound(m_astrProperties)
+            Print #hndFile, m_astrProperties(intIndex)
+        Next intIndex
+    Close #hndFile
+    
+    ' Write quantity.
+    hndFile = FreeFile
+    Open strFolder & QUANTITY_FILE For Output As #hndFile
+        Print #hndFile, CStr(Quantity)
+    Close #hndFile
+    
+    ' Write notes.
+    hndFile = FreeFile
+    Open strFolder & NOTES_FILE For Output As #hndFile
+        Print #hndFile, Notes
+    Close #hndFile
+    
+    Exported = True
+End Sub
+
 ' Adds a property to the array.
 Public Sub AddProperty(strKey As String, strValue As String)
     If UBound(m_astrProperties) > 0 Then

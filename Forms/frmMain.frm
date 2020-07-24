@@ -524,7 +524,7 @@ Private Sub cmdExport_Click()
     Set component = GetCurrentComponent
     
     ' Set the component as exported.
-    component.Exported = True
+    component.Export txtWorkspace.Text
     ShowComponent CLng(txtItemNumber.Text)
 End Sub
 
