@@ -12,6 +12,7 @@ Class=Component; Classes\clsComponent.cls
 Module=modOpenURL; Modules\modOpenURL.bas
 IconForm="frmMain"
 Startup="frmMain"
+ExeName32="OrderImporter.exe"
 Command32=""
 Name="OrderImporter"
 HelpContextID="0"
