@@ -295,10 +295,20 @@ Begin VB.Form frmMain
    End
    Begin VB.Menu mnuFile 
       Caption         =   "&File"
+      Begin VB.Menu mniFileImportOrder 
+         Caption         =   "&Import Order"
+         Shortcut        =   ^O
+      End
+      Begin VB.Menu mniFileSeparator1 
+         Caption         =   "-"
+      End
       Begin VB.Menu mniFileExit 
          Caption         =   "E&xit"
          Shortcut        =   ^Q
       End
+   End
+   Begin VB.Menu mnuComponent 
+      Caption         =   "&Component"
    End
    Begin VB.Menu mnuHelp 
       Caption         =   "&Help"
@@ -593,4 +603,10 @@ End Sub
 ' Exits the application.
 Private Sub mniFileExit_Click()
     Unload Me
+End Sub
+
+' Opens an order file and imports it.
+Private Sub mniFileImportOrder_Click()
+    cmdBrowseOrder_Click
+    cmdImport_Click
 End Sub
