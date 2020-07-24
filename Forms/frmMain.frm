@@ -460,6 +460,13 @@ End Sub
 Private Sub cmdExport_Click()
     ' Don't forget to save any changes.
     SaveCurrentComponent
+    
+    ' Check if there's an output folder selected.
+    If txtWorkspace.Text = "" Then
+        MsgBox "No destination workspace selected. Please select one before exporting.", _
+            vbOKOnly + vbInformation, "No Export Workspace Selected"
+        Exit Sub
+    End If
 End Sub
 
 ' Go to the first component in the records.
@@ -470,6 +477,14 @@ End Sub
 
 ' Import the order file.
 Private Sub cmdImport_Click()
+    ' Check if there's an order file selected.
+    If txtOrderLocation.Text = "" Then
+        MsgBox "No order file selected. Please select one before importing.", _
+            vbOKOnly + vbInformation, "No Order File Selected"
+        Exit Sub
+    End If
+    
+    ' Actually import the data.
     ImportOrder
 End Sub
 
