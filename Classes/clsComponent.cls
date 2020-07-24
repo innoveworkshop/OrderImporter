@@ -31,12 +31,32 @@ Public Sub InitializeProperties(intSize As Integer)
 End Sub
 
 ' Adds a property to the array.
-Public Sub AddProperty(strKey As String, strValue)
+Public Sub AddProperty(strKey As String, strValue As String)
     If UBound(m_astrProperties) > 0 Then
         ReDim Preserve m_astrProperties(UBound(m_astrProperties) + 1)
     End If
     
     m_astrProperties(UBound(m_astrProperties)) = strKey & ": " & strValue
+End Sub
+
+' Edit a property from the array.
+Public Sub EditProperty(strKey As String, strValue As String)
+    Dim intIndex As Integer
+    Dim strProperty As String
+    
+    ' Go through the properties looking for the specified key.
+    For intIndex = 0 To UBound(m_astrProperties)
+        strProperty = m_astrProperties(intIndex)
+        
+        If InStr(strProperty, strKey & ":") Then
+            m_astrProperties(intIndex) = strKey & ": " & strValue
+            Exit Sub
+        End If
+    Next intIndex
+    
+    ' Key wasn't found.
+    MsgBox "The property key you want to edit wasn't found.", _
+        vbOKOnly + vbCritical, "Property Key Not Found"
 End Sub
 
 ' Removes invalid properties from the properties array.

@@ -536,6 +536,26 @@ Private Sub Form_Load()
     fraComponent.Enabled = False
 End Sub
 
+' User wants to edit a property.
+Private Sub grdProperties_DblClick()
+    Dim strKey As String
+    Dim strValue As String
+    Dim component As component
+    
+    ' Get properties and get user input.
+    Set component = GetCurrentComponent
+    strKey = grdProperties.TextMatrix(grdProperties.Row, 0)
+    strValue = grdProperties.TextMatrix(grdProperties.Row, 1)
+    strValue = InputBox(strKey & ":", "Edit Property", strValue)
+    
+    ' Change property if the user entered something.
+    If strValue <> "" Then
+        component.EditProperty strKey, strValue
+        SaveCurrentComponent
+        ShowComponent CLng(txtItemNumber.Text)
+    End If
+End Sub
+
 ' Exits the application.
 Private Sub mniFileExit_Click()
     Unload Me
