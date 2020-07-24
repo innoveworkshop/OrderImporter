@@ -14,3 +14,6 @@ Public Const QUANTITY_FILE  As String = "QUANTITY"
 Public Const NOTES_FILE     As String = "notes.txt"
 Public Const DATASHEET_FILE As String = "datasheet.pdf"
 Public Const IMAGE_FILE     As String = "IMAGE"
+
+' Manifest.
+Public Const VALUE_PROPERTY As String = "Value-"
