@@ -296,7 +296,7 @@ Begin VB.Form frmMain
    Begin VB.Menu mnuFile 
       Caption         =   "&File"
       Begin VB.Menu mniFileImportOrder 
-         Caption         =   "&Import Order"
+         Caption         =   "&Import Order..."
          Shortcut        =   ^O
       End
       Begin VB.Menu mniFileSeparator1 
@@ -309,6 +309,36 @@ Begin VB.Form frmMain
    End
    Begin VB.Menu mnuComponent 
       Caption         =   "&Component"
+      Begin VB.Menu mniComponentPrevious 
+         Caption         =   "P&revious"
+      End
+      Begin VB.Menu mniComponentNext 
+         Caption         =   "&Next"
+      End
+      Begin VB.Menu mniComponentSeparator1 
+         Caption         =   "-"
+      End
+      Begin VB.Menu mniComponentAddCategory 
+         Caption         =   "Add &Category..."
+      End
+      Begin VB.Menu mniComponentAddSubCategory 
+         Caption         =   "Add &Sub-Category..."
+      End
+      Begin VB.Menu mniComponentAddPackage 
+         Caption         =   "Add &Package..."
+      End
+      Begin VB.Menu mniComponentSeparator2 
+         Caption         =   "-"
+      End
+      Begin VB.Menu mniComponentLoadWebsite 
+         Caption         =   "Load &Website..."
+      End
+      Begin VB.Menu mniComponentSeparator3 
+         Caption         =   "-"
+      End
+      Begin VB.Menu mniComponentExport 
+         Caption         =   "E&xport"
+      End
    End
    Begin VB.Menu mnuHelp 
       Caption         =   "&Help"
@@ -376,8 +406,9 @@ Public Sub ShowComponent(lngIndex As Long)
         End If
     Next intIndex
     
-    ' Enable the component panel for editing.
+    ' Enable the component panel for editing and menu item.
     fraComponent.Enabled = True
+    mnuComponent.Enabled = True
 End Sub
 
 ' Gets the currently selected component.
@@ -455,6 +486,7 @@ Private Sub cmdBrowseOrder_Click()
     dlgCommon.DialogTitle = "Import Distributor Order File"
     dlgCommon.DefaultExt = "csv"
     dlgCommon.Filter = "Comma Separated Files (*.csv)|*.csv|All Files (*.*)|*.*"
+    dlgCommon.FileName = ""
     dlgCommon.ShowOpen
     
     ' Set the path.
@@ -467,10 +499,13 @@ Private Sub cmdBrowseWorkspace_Click()
     dlgCommon.DialogTitle = "Select PartCat Workspace"
     dlgCommon.DefaultExt = "pcw"
     dlgCommon.Filter = "PartCat Workspace (*.pcw)|*.pcw|All Files (*.*)|*.*"
+    dlgCommon.FileName = ""
     dlgCommon.ShowOpen
     
     ' Set the path.
-    txtWorkspace.Text = GetComponentsDir(dlgCommon.FileName)
+    If dlgCommon.FileName <> "" Then
+        txtWorkspace.Text = GetComponentsDir(dlgCommon.FileName)
+    End If
 End Sub
 
 ' Export component to a workspace.
@@ -556,8 +591,9 @@ Private Sub Form_Load()
     grdProperties.ColWidth(0) = (grdProperties.Width / 2) - 45
     grdProperties.ColWidth(1) = (grdProperties.Width / 2) - 45
     
-    ' Disable the component panel.
+    ' Disable the component panel and menu.
     fraComponent.Enabled = False
+    mnuComponent.Enabled = False
 End Sub
 
 ' User wants to edit a property.
@@ -600,6 +636,46 @@ Private Sub grdProperties_KeyDown(KeyCode As Integer, Shift As Integer)
     End If
 End Sub
 
+' Add component category menu clicked.
+Private Sub mniComponentAddCategory_Click()
+    cmdAddCategory_Click
+End Sub
+
+' Add component package menu clicked.
+Private Sub mniComponentAddPackage_Click()
+    cmdAddPackage_Click
+End Sub
+
+' Add component sub-category menu clicked.
+Private Sub mniComponentAddSubCategory_Click()
+    cmdAddSubCategory_Click
+End Sub
+
+Private Sub mniComponentExport_Click()
+    If txtWorkspace.Text = "" Then
+        cmdBrowseWorkspace_Click
+    End If
+    
+    If txtWorkspace.Text <> "" Then
+        cmdExport_Click
+    End If
+End Sub
+
+' Load component website menu clicked.
+Private Sub mniComponentLoadWebsite_Click()
+    cmdLoadWebsite_Click
+End Sub
+
+' Next component menu clicked.
+Private Sub mniComponentNext_Click()
+    cmdNext_Click
+End Sub
+
+' Previous component menu clicked.
+Private Sub mniComponentPrevious_Click()
+    cmdPrevious_Click
+End Sub
+
 ' Exits the application.
 Private Sub mniFileExit_Click()
     Unload Me
@@ -608,5 +684,7 @@ End Sub
 ' Opens an order file and imports it.
 Private Sub mniFileImportOrder_Click()
     cmdBrowseOrder_Click
-    cmdImport_Click
+    If txtOrderLocation.Text <> "" Then
+        cmdImport_Click
+    End If
 End Sub
