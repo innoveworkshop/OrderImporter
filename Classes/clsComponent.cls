@@ -24,6 +24,7 @@ Private m_strNotes As String
 Private m_strDatasheet As String
 Private m_astrProperties() As String
 Private m_strSearchCode As String
+Private m_blnExported As Boolean
 
 ' Initializes the properties array.
 Public Sub InitializeProperties(intSize As Integer)
@@ -146,6 +147,16 @@ End Property
 ' Search code setter.
 Public Property Let SearchCode(strSearchCode As String)
     m_strSearchCode = strSearchCode
+End Property
+
+' Exported getter.
+Public Property Get Exported() As Boolean
+    Exported = m_blnExported
+End Property
+
+' Exported setter.
+Public Property Let Exported(blnExported As Boolean)
+    m_blnExported = blnExported
 End Property
 
 ' Property getter.

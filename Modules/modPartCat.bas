@@ -29,6 +29,7 @@ Public Sub AddComponent(strName As String, strNotes As String, _
         .Notes = strNotes
         .Quantity = lngQuantity
         .SearchCode = strSearchCode
+        .Exported = False
     End With
     
     ' Set the component properties.
