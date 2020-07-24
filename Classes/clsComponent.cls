@@ -52,7 +52,7 @@ Public Sub Export(strPath As String)
     Open strFolder & MANIFEST_FILE For Output As #hndFile
         Dim intIndex As Integer
         For intIndex = 0 To UBound(m_astrProperties)
-            Print #hndFile, m_astrProperties(intIndex)
+            Print #hndFile, ManifestLine(m_astrProperties(intIndex))
         Next intIndex
     Close #hndFile
     
@@ -164,6 +164,25 @@ Public Sub RemoveInvalidProperties()
     Next intIndex
 End Sub
 
+' Makes a manifest file line from a property in the array.
+Private Function ManifestLine(strProperty As String) As String
+    Dim astrProperty() As String
+    
+    ' Split the key and value.
+    astrProperty = Split(strProperty, ": ")
+    
+    ' Append the "Value-" to needed properties.
+    If (astrProperty(0) <> "Category") And (astrProperty(0) <> "Sub-Category") And _
+            (astrProperty(0) <> "Package") Then
+        astrProperty(0) = VALUE_PROPERTY & astrProperty(0)
+    End If
+    
+    ' Substitute spaces with dashes.
+    astrProperty(0) = Replace(astrProperty(0), " ", "-")
+    
+    ManifestLine = astrProperty(0) & ": " & astrProperty(1)
+End Function
+
 ' Checks if a property line is valid.
 Private Function IsPropertyLineValid(strLine As String) As Boolean
     If InStr(strLine, ":") <> 0 Then
@@ -274,6 +293,7 @@ Public Property Let Property(intIndex As Integer, strProperty As String)
     End If
     
     ' Remove invalid characters from property key.
+    astrProperty(0) = Replace(astrProperty(0), "  ", " ")
     astrProperty(0) = Replace(astrProperty(0), "'", "")
     astrProperty(0) = Replace(astrProperty(0), "(", "")
     astrProperty(0) = Replace(astrProperty(0), ")", "")
