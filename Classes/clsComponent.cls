@@ -68,6 +68,17 @@ Public Sub Export(strPath As String)
         Print #hndFile, Notes
     Close #hndFile
     
+    ' Download datasheet.
+    If m_strDatasheet <> "" Then
+        If Not DownloadFile(m_strDatasheet, strFolder & DATASHEET_FILE) Then
+            MsgBox "Failed to download the component datasheet.", _
+                vbOKOnly + vbExclamation, "Download Failed"
+            
+            Exported = False
+            Exit Sub
+        End If
+    End If
+    
     Exported = True
 End Sub
 
