@@ -382,6 +382,7 @@ Public Sub ShowComponent(lngIndex As Long)
     txtName.Text = component.Name
     txtQuantity.Text = CStr(component.Quantity)
     txtNotes.Text = component.Notes
+    txtDatasheetURL.Text = component.Datasheet
     
     ' Set the exported checkbox.
     If component.Exported Then
