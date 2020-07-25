@@ -683,8 +683,10 @@ End Sub
 
 ' Adds a brand new property to a component.
 Private Sub mniComponentAddProperty_Click()
-    dlgProperty.Show vbModal, Me
-    MsgBox "Hi"
+    If dlgProperty.ShowAdd(Me) Then
+        SaveCurrentComponent
+        ShowComponent CLng(txtItemNumber.Text)
+    End If
 End Sub
 
 ' Add component sub-category menu clicked.
