@@ -10,6 +10,7 @@ Module=modPartCat; Modules\modPartCat.bas
 Module=modCSVParser; Libraries\modCSVParser.bas
 Class=Component; Classes\clsComponent.cls
 Module=modOpenURL; Modules\modOpenURL.bas
+Module=modFileDownload; Modules\modFileDownload.bas
 IconForm="frmMain"
 Startup="frmMain"
 ExeName32="OrderImporter.exe"
