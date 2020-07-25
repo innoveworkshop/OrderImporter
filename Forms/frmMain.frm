@@ -737,3 +737,8 @@ Private Sub mniFileImportOrder_Click()
         cmdImport_Click
     End If
 End Sub
+
+' Show about dialog.
+Private Sub mniHelpAbout_Click()
+    frmAbout.Show
+End Sub
