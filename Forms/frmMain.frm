@@ -29,7 +29,7 @@ Begin VB.Form frmMain
       Begin VB.CommandButton cmdAddPackage 
          Height          =   615
          Left            =   6000
-         Picture         =   "frmMain.frx":0442
+         Picture         =   "frmMain.frx":030A
          Style           =   1  'Graphical
          TabIndex        =   32
          Top             =   3960
@@ -38,7 +38,7 @@ Begin VB.Form frmMain
       Begin VB.CommandButton cmdAddSubCategory 
          Height          =   615
          Left            =   6000
-         Picture         =   "frmMain.frx":074C
+         Picture         =   "frmMain.frx":0614
          Style           =   1  'Graphical
          TabIndex        =   31
          Top             =   3240
@@ -47,7 +47,7 @@ Begin VB.Form frmMain
       Begin VB.CommandButton cmdAddCategory 
          Height          =   615
          Left            =   6000
-         Picture         =   "frmMain.frx":0B8E
+         Picture         =   "frmMain.frx":0A56
          Style           =   1  'Graphical
          TabIndex        =   30
          Top             =   2520
@@ -245,9 +245,9 @@ Begin VB.Form frmMain
       Begin VB.ComboBox cmbDistributor 
          Height          =   315
          Index           =   0
-         ItemData        =   "frmMain.frx":0FD0
+         ItemData        =   "frmMain.frx":0E98
          Left            =   4320
-         List            =   "frmMain.frx":0FD7
+         List            =   "frmMain.frx":0E9F
          TabIndex        =   5
          Text            =   "Farnell"
          Top             =   480
