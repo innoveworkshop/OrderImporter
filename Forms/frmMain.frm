@@ -332,12 +332,14 @@ Begin VB.Form frmMain
       End
       Begin VB.Menu mniComponentLoadWebsite 
          Caption         =   "Load &Website..."
+         Shortcut        =   ^L
       End
       Begin VB.Menu mniComponentSeparator3 
          Caption         =   "-"
       End
       Begin VB.Menu mniComponentExport 
          Caption         =   "E&xport"
+         Shortcut        =   ^S
       End
    End
    Begin VB.Menu mnuHelp 
@@ -512,6 +514,13 @@ End Sub
 Private Sub cmdExport_Click()
     Dim component As component
     
+    ' Check if there's a component selected.
+    If Not fraComponent.Enabled Then
+        MsgBox "There isn't a component selected. We can't export this.", _
+            vbOKOnly + vbCritical, "No Component Selected"
+        Exit Sub
+    End If
+    
     ' Check if there's an output folder selected.
     If txtWorkspace.Text = "" Then
         MsgBox "No destination workspace selected. Please select one before exporting.", _
@@ -526,6 +535,15 @@ Private Sub cmdExport_Click()
     ' Set the component as exported.
     component.Export txtWorkspace.Text
     ShowComponent CLng(txtItemNumber.Text)
+    
+    ' Give the user some feedback.
+    If component.Exported Then
+        MsgBox component.Name & " exported successfully.", vbOKOnly + vbInformation, _
+            "Component Exported"
+    Else
+        MsgBox component.Name & " export failed.", vbOKOnly + vbCritical, _
+            "Failed to Export Component"
+    End If
 End Sub
 
 ' Go to the first component in the records.
