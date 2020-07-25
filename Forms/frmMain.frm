@@ -318,6 +318,17 @@ Begin VB.Form frmMain
       Begin VB.Menu mniComponentSeparator1 
          Caption         =   "-"
       End
+      Begin VB.Menu mniComponentAddProperty 
+         Caption         =   "&Add Property..."
+         Shortcut        =   ^N
+      End
+      Begin VB.Menu mniComponentDeleteProperty 
+         Caption         =   "&Delete Propety"
+         Shortcut        =   ^D
+      End
+      Begin VB.Menu mniComponentSeparator2 
+         Caption         =   "-"
+      End
       Begin VB.Menu mniComponentAddCategory 
          Caption         =   "Add &Category..."
       End
@@ -327,14 +338,14 @@ Begin VB.Form frmMain
       Begin VB.Menu mniComponentAddPackage 
          Caption         =   "Add &Package..."
       End
-      Begin VB.Menu mniComponentSeparator2 
+      Begin VB.Menu mniComponentSeparator3 
          Caption         =   "-"
       End
       Begin VB.Menu mniComponentLoadWebsite 
          Caption         =   "Load &Website..."
          Shortcut        =   ^L
       End
-      Begin VB.Menu mniComponentSeparator3 
+      Begin VB.Menu mniComponentSeparator4 
          Caption         =   "-"
       End
       Begin VB.Menu mniComponentExport 
@@ -429,6 +440,23 @@ Public Sub SaveCurrentComponent()
     component.Notes = txtNotes.Text
     component.Datasheet = txtDatasheetURL.Text
     component.Quantity = CLng(txtQuantity.Text)
+End Sub
+
+' Deletes the currently selected property.
+Public Sub DeleteSelectedProperty()
+    Dim strKey As String
+    Dim component As component
+
+    ' Get component and selected key.
+    Set component = GetCurrentComponent
+    strKey = grdProperties.TextMatrix(grdProperties.Row, 0)
+    
+    ' Actually delete the property.
+    component.DeleteProperty strKey
+    
+    ' Save component changes and reload the view.
+    SaveCurrentComponent
+    ShowComponent CLng(txtItemNumber.Text)
 End Sub
 
 ' Add a category to the properties
@@ -637,21 +665,9 @@ End Sub
 
 ' Check for keypresses on the properties grid.
 Private Sub grdProperties_KeyDown(KeyCode As Integer, Shift As Integer)
-    Dim strKey As String
-    Dim component As component
-    
     ' Delete a property for the user.
     If KeyCode = vbKeyDelete Then
-        ' Get component and selected key.
-        Set component = GetCurrentComponent
-        strKey = grdProperties.TextMatrix(grdProperties.Row, 0)
-        
-        ' Actually delete the property.
-        component.DeleteProperty strKey
-        
-        ' Save component changes and reload the view.
-        SaveCurrentComponent
-        ShowComponent CLng(txtItemNumber.Text)
+        DeleteSelectedProperty
     End If
 End Sub
 
@@ -665,11 +681,23 @@ Private Sub mniComponentAddPackage_Click()
     cmdAddPackage_Click
 End Sub
 
+' Adds a brand new property to a component.
+Private Sub mniComponentAddProperty_Click()
+    dlgProperty.Show vbModal, Me
+    MsgBox "Hi"
+End Sub
+
 ' Add component sub-category menu clicked.
 Private Sub mniComponentAddSubCategory_Click()
     cmdAddSubCategory_Click
 End Sub
 
+' Delete property menu clicked.
+Private Sub mniComponentDeleteProperty_Click()
+    DeleteSelectedProperty
+End Sub
+
+' Component export menu clicked.
 Private Sub mniComponentExport_Click()
     If txtWorkspace.Text = "" Then
         cmdBrowseWorkspace_Click
