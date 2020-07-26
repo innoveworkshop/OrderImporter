@@ -212,7 +212,6 @@ Public Static Function RemoveInvalidFileCharacters(strName As String) As String
     strBuffer = strName
     
     ' Remove invalid characters.
-    strBuffer = Replace(strBuffer, ".", "")
     strBuffer = Replace(strBuffer, "<", "")
     strBuffer = Replace(strBuffer, ">", "")
     strBuffer = Replace(strBuffer, ":", "")
