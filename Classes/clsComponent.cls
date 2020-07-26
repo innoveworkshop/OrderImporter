@@ -84,7 +84,7 @@ End Sub
 
 ' Adds a property to the array.
 Public Sub AddProperty(strKey As String, strValue As String)
-    If UBound(m_astrProperties) > 0 Then
+    If (UBound(m_astrProperties) > 0) Or (m_astrProperties(0) <> "") Then
         ReDim Preserve m_astrProperties(UBound(m_astrProperties) + 1)
     End If
     
