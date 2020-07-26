@@ -23,7 +23,7 @@ Name="OrderImporter"
 HelpContextID="0"
 CompatibleMode="0"
 MajorVer=1
-MinorVer=0
+MinorVer=1
 RevisionVer=0
 AutoIncrementVer=0
 ServerSupportFiles=0
@@ -43,6 +43,7 @@ Unattended=0
 Retained=0
 ThreadPerObject=0
 MaxNumberOfThreads=1
+DebugStartupOption=0
 
 [MS Transaction Server]
 AutoRefresh=1
