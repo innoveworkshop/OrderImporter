@@ -48,13 +48,15 @@ Public Sub Export(strPath As String)
     MkDir strFolder
     
     ' Write manifest.
-    hndFile = FreeFile
-    Open strFolder & MANIFEST_FILE For Output As #hndFile
-        Dim intIndex As Integer
-        For intIndex = 0 To UBound(m_astrProperties)
-            Print #hndFile, ManifestLine(m_astrProperties(intIndex))
-        Next intIndex
-    Close #hndFile
+    If (UBound(m_astrProperties) > 0) And (m_astrProperties(0) <> "") Then
+        hndFile = FreeFile
+        Open strFolder & MANIFEST_FILE For Output As #hndFile
+            Dim intIndex As Integer
+            For intIndex = 0 To UBound(m_astrProperties)
+                Print #hndFile, ManifestLine(m_astrProperties(intIndex))
+            Next intIndex
+        Close #hndFile
+    End If
     
     ' Write quantity.
     hndFile = FreeFile
