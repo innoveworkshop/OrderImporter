@@ -48,7 +48,7 @@ Public Sub Export(strPath As String)
     MkDir strFolder
     
     ' Write manifest.
-    If (UBound(m_astrProperties) > 0) And (m_astrProperties(0) <> "") Then
+    If m_astrProperties(0) <> "" Then
         hndFile = FreeFile
         Open strFolder & MANIFEST_FILE For Output As #hndFile
             Dim intIndex As Integer
