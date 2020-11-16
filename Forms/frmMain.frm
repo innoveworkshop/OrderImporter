@@ -360,6 +360,23 @@ Attribute VB_Exposed = False
 ''' Author: Nathan Campos <nathan@innoveworkshop.com>
 Option Explicit
 
+' Browse for PartsCatalog database.
+Private Sub OpenDatabaseFile()
+    ' Setup open dialog.
+    dlgCommon.DialogTitle = "Open Database"
+    dlgCommon.DefaultExt = "mdb"
+    dlgCommon.Filter = "Microsoft Access Databases (*.mdb)|*.mdb|All Files (*.*)|*.*"
+    dlgCommon.FileName = ""
+    dlgCommon.ShowOpen
+    
+    ' TODO: Set the new database.
+    
+    ' Set the path.
+    If dlgCommon.FileName <> "" Then
+        txtWorkspace.Text = GetComponentsDir(dlgCommon.FileName)
+    End If
+End Sub
+
 ' Imports an order into the system.
 Public Sub ImportOrder()
     ' Parse order and populate the components array.
@@ -368,6 +385,44 @@ Public Sub ImportOrder()
     ' Update the components record counter and show the first component.
     lblNumberItems.Caption = "of " & LastComponentIndex
     ShowComponent 0
+End Sub
+
+' Imports the current component into the database.
+Private Sub ImportCurrentComponent()
+    Dim component As component
+    
+    ' TODO: Requires conversion to database.
+    
+    ' Check if there's a component selected.
+    If Not fraComponent.Enabled Then
+        MsgBox "There isn't a component selected. We can't export this.", _
+            vbOKOnly + vbCritical, "No Component Selected"
+        Exit Sub
+    End If
+    
+    ' Check if there's an output folder selected.
+    If txtWorkspace.Text = "" Then
+        MsgBox "No destination workspace selected. Please select one before exporting.", _
+            vbOKOnly + vbInformation, "No Export Workspace Selected"
+        Exit Sub
+    End If
+    
+    ' Don't forget to save any changes and get the current component as well.
+    SaveCurrentComponent
+    Set component = GetCurrentComponent
+    
+    ' Set the component as exported.
+    component.Export txtWorkspace.Text
+    ShowComponent CLng(txtItemNumber.Text)
+    
+    ' Give the user some feedback.
+    If component.Exported Then
+        MsgBox component.Name & " exported successfully.", vbOKOnly + vbInformation, _
+            "Component Exported"
+    Else
+        MsgBox component.Name & " export failed.", vbOKOnly + vbCritical, _
+            "Failed to Export Component"
+    End If
 End Sub
 
 ' Shows a component by its index.
@@ -447,59 +502,15 @@ Public Sub DeleteSelectedProperty()
     ShowComponent CLng(txtItemNumber.Text)
 End Sub
 
-' Add a category to the properties
-Private Sub cmdAddCategory_Click()
-    Dim strCategory As String
+' Opens the component distributor website with a search in place.
+Private Sub LoadCurrentComponentWebsite()
     Dim component As component
-    
-    ' Get the category from the user.
     Set component = GetCurrentComponent
-    strCategory = InputBox("Component category:", "Set the component category")
     
-    ' Check if the user entered something and add the property.
-    If strCategory <> "" Then
-        component.AddProperty "Category", strCategory
-        SaveCurrentComponent
-        ShowComponent CLng(txtItemNumber.Text)
-    End If
+    OpenURL "https://pt.farnell.com/search?st=" & component.SearchCode
 End Sub
 
-' Add a package to the properties.
-Private Sub cmdAddPackage_Click()
-    Dim strPackage As String
-    Dim component As component
-    
-    ' Get the package from the user.
-    Set component = GetCurrentComponent
-    strPackage = InputBox("Component package:", "Set the component package")
-    
-    ' Check if the user entered something and add the property.
-    If strPackage <> "" Then
-        component.AddProperty "Package", strPackage
-        SaveCurrentComponent
-        ShowComponent CLng(txtItemNumber.Text)
-    End If
-End Sub
-
-' Add a sub-category to the properties.
-Private Sub cmdAddSubCategory_Click()
-    Dim strSubCategory As String
-    Dim component As component
-    
-    ' Get the sub-category from the user.
-    Set component = GetCurrentComponent
-    strSubCategory = InputBox("Component sub-category:", _
-        "Set the component sub-category")
-    
-    ' Check if the user entered something and add the property.
-    If strSubCategory <> "" Then
-        component.AddProperty "Sub-Category", strSubCategory
-        SaveCurrentComponent
-        ShowComponent CLng(txtItemNumber.Text)
-    End If
-End Sub
-
-' Browse for order file.
+' Browse for the order file to load.
 Private Sub cmdBrowseOrder_Click()
     ' Setup open dialog.
     dlgCommon.DialogTitle = "Import Distributor Order File"
@@ -512,55 +523,9 @@ Private Sub cmdBrowseOrder_Click()
     txtOrderLocation.Text = dlgCommon.FileName
 End Sub
 
-' Browe for PartCat workspace.
-Private Sub cmdBrowseWorkspace_Click()
-    ' Setup open dialog.
-    dlgCommon.DialogTitle = "Select PartCat Workspace"
-    dlgCommon.DefaultExt = "pcw"
-    dlgCommon.Filter = "PartCat Workspace (*.pcw)|*.pcw|All Files (*.*)|*.*"
-    dlgCommon.FileName = ""
-    dlgCommon.ShowOpen
-    
-    ' Set the path.
-    If dlgCommon.FileName <> "" Then
-        txtWorkspace.Text = GetComponentsDir(dlgCommon.FileName)
-    End If
-End Sub
-
-' Export component to a workspace.
+' Import current component into the database.
 Private Sub cmdExport_Click()
-    Dim component As component
-    
-    ' Check if there's a component selected.
-    If Not fraComponent.Enabled Then
-        MsgBox "There isn't a component selected. We can't export this.", _
-            vbOKOnly + vbCritical, "No Component Selected"
-        Exit Sub
-    End If
-    
-    ' Check if there's an output folder selected.
-    If txtWorkspace.Text = "" Then
-        MsgBox "No destination workspace selected. Please select one before exporting.", _
-            vbOKOnly + vbInformation, "No Export Workspace Selected"
-        Exit Sub
-    End If
-    
-    ' Don't forget to save any changes and get the current component as well.
-    SaveCurrentComponent
-    Set component = GetCurrentComponent
-    
-    ' Set the component as exported.
-    component.Export txtWorkspace.Text
-    ShowComponent CLng(txtItemNumber.Text)
-    
-    ' Give the user some feedback.
-    If component.Exported Then
-        MsgBox component.Name & " exported successfully.", vbOKOnly + vbInformation, _
-            "Component Exported"
-    Else
-        MsgBox component.Name & " export failed.", vbOKOnly + vbCritical, _
-            "Failed to Export Component"
-    End If
+    ImportCurrentComponent
 End Sub
 
 ' Go to the first component in the records.
@@ -590,10 +555,7 @@ End Sub
 
 ' Opens the component distributor website with a search in place.
 Private Sub cmdLoadWebsite_Click()
-    Dim component As component
-    Set component = GetCurrentComponent
-    
-    OpenURL "https://pt.farnell.com/search?st=" & component.SearchCode
+    LoadCurrentComponentWebsite
 End Sub
 
 ' Go to the next component in the records.
@@ -674,18 +636,20 @@ End Sub
 
 ' Component > Import menu clicked.
 Private Sub mniComponentExport_Click()
-    If txtWorkspace.Text = "" Then
-        cmdBrowseWorkspace_Click
+    ' If no database is associated, browse for one first.
+    If Not IsDatabaseAssociated Then
+        OpenDatabaseFile
     End If
     
-    If txtWorkspace.Text <> "" Then
-        cmdExport_Click
+    ' Import the current component if a database is associated.
+    If IsDatabaseAssociated Then
+        ImportCurrentComponent
     End If
 End Sub
 
 ' Component > Load Website clicked.
 Private Sub mniComponentLoadWebsite_Click()
-    cmdLoadWebsite_Click
+    LoadCurrentComponentWebsite
 End Sub
 
 ' Component > Next menu clicked.
