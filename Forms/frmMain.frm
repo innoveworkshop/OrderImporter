@@ -290,6 +290,9 @@ Begin VB.Form frmMain
          Caption         =   "&Load Order..."
          Shortcut        =   ^O
       End
+      Begin VB.Menu mniFileOpenDatabase 
+         Caption         =   "&Open Database..."
+      End
       Begin VB.Menu mniFileSeparator1 
          Caption         =   "-"
       End
@@ -352,24 +355,41 @@ Attribute VB_Exposed = False
 Option Explicit
 
 ' Browse for PartsCatalog database.
-Private Sub OpenDatabaseFile()
-    ' Setup open dialog.
-    dlgCommon.DialogTitle = "Open Database"
-    dlgCommon.DefaultExt = "mdb"
-    dlgCommon.Filter = "Microsoft Access Databases (*.mdb)|*.mdb|All Files (*.*)|*.*"
-    dlgCommon.FileName = ""
-    dlgCommon.ShowOpen
+Private Sub OpenDatabaseFile(Optional strPath As String = vbNullString)
+    Dim strSetPath As String
+    strSetPath = strPath
     
-    ' TODO: Set the new database.
+    ' Check if we should use the open dialog.
+    If strPath = vbNullString Then
+        ' Setup open dialog.
+        dlgCommon.DialogTitle = "Open Database"
+        dlgCommon.DefaultExt = "mdb"
+        dlgCommon.Filter = "Microsoft Access Databases (*.mdb)|*.mdb|All Files (*.*)|*.*"
+        dlgCommon.FileName = ""
+        
+        ' Open the dialog and set the path.
+        dlgCommon.ShowOpen
+        strSetPath = dlgCommon.FileName
+    End If
     
-    ' Set the path.
-    If dlgCommon.FileName <> "" Then
-        txtWorkspace.Text = GetComponentsDir(dlgCommon.FileName)
+    ' Set the database path.
+    If strSetPath <> vbNullString Then
+        SetDatabasePath strSetPath
+        
+        ' Populate database-dependent components.
+        PopulateComboBoxes
     End If
 End Sub
 
 ' Imports an order into the system.
 Public Sub ImportOrder()
+    ' Check if we have an opened database.
+    If Not IsDatabaseAssociated Then
+        MsgBox "There isn't a database currently opened. Open one before " & _
+            "loading a new order.", vbOKOnly + vbExclamation, "No Database Associated"
+        Exit Sub
+    End If
+    
     ' Parse order and populate the components array.
     ParseFarnellOrder txtOrderLocation.Text
     
@@ -378,9 +398,37 @@ Public Sub ImportOrder()
     ShowComponent 0
 End Sub
 
+' Populates the ComboBoxes with data from the database.
+Private Sub PopulateComboBoxes()
+    ' Check if we have an opened database.
+    If Not IsDatabaseAssociated Then
+        MsgBox "There isn't a database currently opened. Open one before " & _
+            "trying to refresh the ComboBoxes.", vbOKOnly + vbExclamation, _
+            "No Database Associated"
+        Exit Sub
+    End If
+    
+    ' Clear them first.
+    cmbCategory.Clear
+    cmbSubCategory.Clear
+    cmbPackage.Clear
+    
+    ' Load data into them.
+    LoadPackages cmbPackage
+    LoadCategories cmbCategory
+End Sub
+
 ' Imports the current component into the database.
 Private Sub ImportCurrentComponent()
     Dim component As component
+    
+    ' Check if we have an opened database.
+    If Not IsDatabaseAssociated Then
+        MsgBox "There isn't a database currently opened. Open one before " & _
+            "trying to import a component.", vbOKOnly + vbExclamation, _
+            "No Database Associated"
+        Exit Sub
+    End If
     
     ' Check if there's a component selected.
     If Not fraComponent.Enabled Then
@@ -497,6 +545,12 @@ Private Sub LoadCurrentComponentWebsite()
     Set component = GetCurrentComponent
     
     OpenURL "https://pt.farnell.com/search?st=" & component.SearchCode
+End Sub
+
+' Category selection updated.
+Private Sub cmbCategory_Click()
+    LoadSubCategories cmbCategory.ItemData(cmbCategory.ListIndex), _
+        cmbSubCategory
 End Sub
 
 ' Browse for the order file to load.
@@ -662,6 +716,11 @@ Private Sub mniFileLoadOrder_Click()
     If txtOrderLocation.Text <> "" Then
         cmdImport_Click
     End If
+End Sub
+
+' File > Open Database menu clicked.
+Private Sub mniFileOpenDatabase_Click()
+    OpenDatabaseFile
 End Sub
 
 ' Help > About menu clicked.
