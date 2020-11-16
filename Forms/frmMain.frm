@@ -5,13 +5,21 @@ Begin VB.Form frmMain
    Caption         =   "PartCat Order Importer"
    ClientHeight    =   7455
    ClientLeft      =   165
-   ClientTop       =   735
+   ClientTop       =   810
    ClientWidth     =   7110
    Icon            =   "frmMain.frx":0000
    LinkTopic       =   "Form1"
    ScaleHeight     =   7455
    ScaleWidth      =   7110
    StartUpPosition =   3  'Windows Default
+   Begin VB.CommandButton cmdExport 
+      Caption         =   "Import Component"
+      Height          =   615
+      Left            =   5880
+      TabIndex        =   32
+      Top             =   6600
+      Width           =   1095
+   End
    Begin MSComDlg.CommonDialog dlgCommon 
       Left            =   3600
       Top             =   960
@@ -23,7 +31,7 @@ Begin VB.Form frmMain
       Caption         =   "Component"
       Height          =   5175
       Left            =   120
-      TabIndex        =   12
+      TabIndex        =   11
       Top             =   1080
       Width           =   6855
       Begin VB.CommandButton cmdAddPackage 
@@ -31,7 +39,7 @@ Begin VB.Form frmMain
          Left            =   6000
          Picture         =   "frmMain.frx":030A
          Style           =   1  'Graphical
-         TabIndex        =   32
+         TabIndex        =   31
          Top             =   3960
          Width           =   735
       End
@@ -40,7 +48,7 @@ Begin VB.Form frmMain
          Left            =   6000
          Picture         =   "frmMain.frx":0614
          Style           =   1  'Graphical
-         TabIndex        =   31
+         TabIndex        =   30
          Top             =   3240
          Width           =   735
       End
@@ -49,16 +57,16 @@ Begin VB.Form frmMain
          Left            =   6000
          Picture         =   "frmMain.frx":0A56
          Style           =   1  'Graphical
-         TabIndex        =   30
+         TabIndex        =   29
          Top             =   2520
          Width           =   735
       End
       Begin VB.CheckBox chkExported 
-         Caption         =   "Exported"
+         Caption         =   "Imported"
          Enabled         =   0   'False
          Height          =   375
          Left            =   2160
-         TabIndex        =   29
+         TabIndex        =   28
          Top             =   4680
          Width           =   975
       End
@@ -66,7 +74,7 @@ Begin VB.Form frmMain
          Caption         =   ">|"
          Height          =   315
          Left            =   6360
-         TabIndex        =   28
+         TabIndex        =   27
          Top             =   4680
          Width           =   375
       End
@@ -74,7 +82,7 @@ Begin VB.Form frmMain
          Caption         =   ">"
          Height          =   315
          Left            =   5880
-         TabIndex        =   27
+         TabIndex        =   26
          Top             =   4680
          Width           =   375
       End
@@ -82,7 +90,7 @@ Begin VB.Form frmMain
          Alignment       =   2  'Center
          Height          =   315
          Left            =   4560
-         TabIndex        =   25
+         TabIndex        =   24
          Text            =   "0"
          Top             =   4680
          Width           =   615
@@ -91,7 +99,7 @@ Begin VB.Form frmMain
          Caption         =   "<"
          Height          =   315
          Left            =   4080
-         TabIndex        =   24
+         TabIndex        =   23
          Top             =   4680
          Width           =   375
       End
@@ -99,7 +107,7 @@ Begin VB.Form frmMain
          Caption         =   "|<"
          Height          =   315
          Left            =   3600
-         TabIndex        =   23
+         TabIndex        =   22
          Top             =   4680
          Width           =   375
       End
@@ -107,21 +115,21 @@ Begin VB.Form frmMain
          Caption         =   "Load Website"
          Height          =   375
          Left            =   120
-         TabIndex        =   22
+         TabIndex        =   21
          Top             =   4680
          Width           =   1575
       End
       Begin VB.TextBox txtDatasheetURL 
          Height          =   315
          Left            =   120
-         TabIndex        =   21
+         TabIndex        =   20
          Top             =   2040
          Width           =   6615
       End
       Begin MSFlexGridLib.MSFlexGrid grdProperties 
          Height          =   2055
          Left            =   120
-         TabIndex        =   19
+         TabIndex        =   18
          Top             =   2520
          Width           =   5775
          _ExtentX        =   10186
@@ -136,21 +144,21 @@ Begin VB.Form frmMain
          Height          =   615
          Left            =   120
          MultiLine       =   -1  'True
-         TabIndex        =   18
+         TabIndex        =   17
          Top             =   1080
          Width           =   6615
       End
       Begin VB.TextBox txtQuantity 
          Height          =   315
          Left            =   5400
-         TabIndex        =   16
+         TabIndex        =   15
          Top             =   480
          Width           =   1335
       End
       Begin VB.TextBox txtName 
          Height          =   315
          Left            =   120
-         TabIndex        =   14
+         TabIndex        =   13
          Top             =   480
          Width           =   5055
       End
@@ -159,7 +167,7 @@ Begin VB.Form frmMain
          Caption         =   "/ 000"
          Height          =   255
          Left            =   5280
-         TabIndex        =   26
+         TabIndex        =   25
          Top             =   4750
          Width           =   495
       End
@@ -167,23 +175,23 @@ Begin VB.Form frmMain
          Caption         =   "Datasheet URL:"
          Height          =   255
          Left            =   120
-         TabIndex        =   20
+         TabIndex        =   19
          Top             =   1800
          Width           =   1335
       End
       Begin VB.Label Label6 
-         Caption         =   "Notes:"
+         Caption         =   "Description:"
          Height          =   255
          Left            =   120
-         TabIndex        =   17
+         TabIndex        =   16
          Top             =   840
-         Width           =   735
+         Width           =   1095
       End
       Begin VB.Label Label5 
          Caption         =   "Quantity:"
          Height          =   255
          Left            =   5400
-         TabIndex        =   15
+         TabIndex        =   14
          Top             =   240
          Width           =   855
       End
@@ -191,7 +199,7 @@ Begin VB.Form frmMain
          Caption         =   "Name:"
          Height          =   255
          Left            =   120
-         TabIndex        =   13
+         TabIndex        =   12
          Top             =   240
          Width           =   615
       End
@@ -202,15 +210,7 @@ Begin VB.Form frmMain
       Left            =   120
       TabIndex        =   7
       Top             =   6360
-      Width           =   6855
-      Begin VB.CommandButton cmdExport 
-         Caption         =   "Export Component"
-         Height          =   615
-         Left            =   5640
-         TabIndex        =   11
-         Top             =   240
-         Width           =   1095
-      End
+      Width           =   5415
       Begin VB.TextBox txtWorkspace 
          Height          =   315
          Left            =   120
@@ -254,7 +254,7 @@ Begin VB.Form frmMain
          Width           =   1335
       End
       Begin VB.CommandButton cmdImport 
-         Caption         =   "Import"
+         Caption         =   "Load Order"
          Height          =   615
          Left            =   5880
          TabIndex        =   4
@@ -295,8 +295,8 @@ Begin VB.Form frmMain
    End
    Begin VB.Menu mnuFile 
       Caption         =   "&File"
-      Begin VB.Menu mniFileImportOrder 
-         Caption         =   "&Import Order..."
+      Begin VB.Menu mniFileLoadOrder 
+         Caption         =   "&Load Order..."
          Shortcut        =   ^O
       End
       Begin VB.Menu mniFileSeparator1 
@@ -329,27 +329,15 @@ Begin VB.Form frmMain
       Begin VB.Menu mniComponentSeparator2 
          Caption         =   "-"
       End
-      Begin VB.Menu mniComponentAddCategory 
-         Caption         =   "Add &Category..."
-      End
-      Begin VB.Menu mniComponentAddSubCategory 
-         Caption         =   "Add &Sub-Category..."
-      End
-      Begin VB.Menu mniComponentAddPackage 
-         Caption         =   "Add &Package..."
-      End
-      Begin VB.Menu mniComponentSeparator3 
-         Caption         =   "-"
-      End
       Begin VB.Menu mniComponentLoadWebsite 
          Caption         =   "Load &Website..."
          Shortcut        =   ^L
       End
-      Begin VB.Menu mniComponentSeparator4 
+      Begin VB.Menu mniComponentSeparator3 
          Caption         =   "-"
       End
       Begin VB.Menu mniComponentExport 
-         Caption         =   "E&xport"
+         Caption         =   "&Import"
          Shortcut        =   ^S
       End
    End
@@ -671,17 +659,7 @@ Private Sub grdProperties_KeyDown(KeyCode As Integer, Shift As Integer)
     End If
 End Sub
 
-' Add component category menu clicked.
-Private Sub mniComponentAddCategory_Click()
-    cmdAddCategory_Click
-End Sub
-
-' Add component package menu clicked.
-Private Sub mniComponentAddPackage_Click()
-    cmdAddPackage_Click
-End Sub
-
-' Adds a brand new property to a component.
+' Component > Add Property clicked.
 Private Sub mniComponentAddProperty_Click()
     If dlgProperty.ShowAdd(Me) Then
         SaveCurrentComponent
@@ -689,17 +667,12 @@ Private Sub mniComponentAddProperty_Click()
     End If
 End Sub
 
-' Add component sub-category menu clicked.
-Private Sub mniComponentAddSubCategory_Click()
-    cmdAddSubCategory_Click
-End Sub
-
-' Delete property menu clicked.
+' Component > Delete Property clicked.
 Private Sub mniComponentDeleteProperty_Click()
     DeleteSelectedProperty
 End Sub
 
-' Component export menu clicked.
+' Component > Import menu clicked.
 Private Sub mniComponentExport_Click()
     If txtWorkspace.Text = "" Then
         cmdBrowseWorkspace_Click
@@ -710,35 +683,35 @@ Private Sub mniComponentExport_Click()
     End If
 End Sub
 
-' Load component website menu clicked.
+' Component > Load Website clicked.
 Private Sub mniComponentLoadWebsite_Click()
     cmdLoadWebsite_Click
 End Sub
 
-' Next component menu clicked.
+' Component > Next menu clicked.
 Private Sub mniComponentNext_Click()
     cmdNext_Click
 End Sub
 
-' Previous component menu clicked.
+' Component > Previous menu clicked.
 Private Sub mniComponentPrevious_Click()
     cmdPrevious_Click
 End Sub
 
-' Exits the application.
+' File > Exit menu clicked.
 Private Sub mniFileExit_Click()
     Unload Me
 End Sub
 
-' Opens an order file and imports it.
-Private Sub mniFileImportOrder_Click()
+' File > Load Order menu clicked.
+Private Sub mniFileLoadOrder_Click()
     cmdBrowseOrder_Click
     If txtOrderLocation.Text <> "" Then
         cmdImport_Click
     End If
 End Sub
 
-' Show about dialog.
+' Help > About menu clicked.
 Private Sub mniHelpAbout_Click()
     frmAbout.Show
 End Sub
