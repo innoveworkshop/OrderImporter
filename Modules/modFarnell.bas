@@ -58,7 +58,7 @@ Public Sub ParseFarnellOrder(strPath As String)
         ' Skip empty rows.
         If astrOrder(idxRow * lngCols + colQuantity) <> "" Then
             ' Separate description from properties.
-            strDescription = astrOrder(idxRow * lngCols + colDescription)
+            strDescription = Trim(astrOrder(idxRow * lngCols + colDescription))
             If strDescription = "" Then
                 ' Looks like the description field is empty.
                 ReDim astrProperties(0)
@@ -67,6 +67,11 @@ Public Sub ParseFarnellOrder(strPath As String)
                 strDescription = Replace(strDescription, ":", ": ")
                 astrProperties = Split(Mid(strDescription, InStr(strDescription, ";") + 2), "; ")
                 strDescription = Left(strDescription, InStr(strDescription, ";") - 1)
+                
+                ' Check if we have a description without any properties.
+                If UBound(astrProperties) < 0 Then
+                    ReDim astrProperties(0)
+                End If
             End If
             
             ' Add component to the array.
