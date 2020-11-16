@@ -62,7 +62,7 @@ Begin VB.Form frmMain
          Caption         =   "Imported"
          Enabled         =   0   'False
          Height          =   375
-         Left            =   3720
+         Left            =   3960
          TabIndex        =   24
          Top             =   5760
          Width           =   975
@@ -381,19 +381,10 @@ End Sub
 Private Sub ImportCurrentComponent()
     Dim component As component
     
-    ' TODO: Requires conversion to database.
-    
     ' Check if there's a component selected.
     If Not fraComponent.Enabled Then
-        MsgBox "There isn't a component selected. We can't export this.", _
+        MsgBox "There isn't a component selected. We can't import this.", _
             vbOKOnly + vbCritical, "No Component Selected"
-        Exit Sub
-    End If
-    
-    ' Check if there's an output folder selected.
-    If txtWorkspace.Text = "" Then
-        MsgBox "No destination workspace selected. Please select one before exporting.", _
-            vbOKOnly + vbInformation, "No Export Workspace Selected"
         Exit Sub
     End If
     
@@ -401,16 +392,23 @@ Private Sub ImportCurrentComponent()
     SaveCurrentComponent
     Set component = GetCurrentComponent
     
+    ' Check if the current component has already been exported.
+    If component.Exported Then
+        MsgBox "Currently we can't modify a component that has already been imported.", _
+            vbOKOnly + vbCritical, "Operation Not Permitted"
+        Exit Sub
+    End If
+    
     ' Set the component as exported.
-    component.Export txtWorkspace.Text
+    component.Export
     ShowComponent CLng(txtItemNumber.Text)
     
     ' Give the user some feedback.
     If component.Exported Then
-        MsgBox component.Name & " exported successfully.", vbOKOnly + vbInformation, _
+        MsgBox component.Name & " imported successfully.", vbOKOnly + vbInformation, _
             "Component Exported"
     Else
-        MsgBox component.Name & " export failed.", vbOKOnly + vbCritical, _
+        MsgBox component.Name & " import failed.", vbOKOnly + vbCritical, _
             "Failed to Export Component"
     End If
 End Sub
