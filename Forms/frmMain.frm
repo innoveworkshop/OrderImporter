@@ -3,23 +3,15 @@ Object = "{5E9E78A0-531B-11CF-91F6-C2863C385E30}#1.0#0"; "MSFLXGRD.OCX"
 Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
 Begin VB.Form frmMain 
    Caption         =   "PartCat Order Importer"
-   ClientHeight    =   7455
+   ClientHeight    =   7500
    ClientLeft      =   165
    ClientTop       =   810
    ClientWidth     =   7110
    Icon            =   "frmMain.frx":0000
    LinkTopic       =   "Form1"
-   ScaleHeight     =   7455
+   ScaleHeight     =   7500
    ScaleWidth      =   7110
    StartUpPosition =   3  'Windows Default
-   Begin VB.CommandButton cmdExport 
-      Caption         =   "Import Component"
-      Height          =   615
-      Left            =   5880
-      TabIndex        =   32
-      Top             =   6600
-      Width           =   1095
-   End
    Begin MSComDlg.CommonDialog dlgCommon 
       Left            =   3600
       Top             =   960
@@ -29,111 +21,116 @@ Begin VB.Form frmMain
    End
    Begin VB.Frame fraComponent 
       Caption         =   "Component"
-      Height          =   5175
+      Height          =   6255
       Left            =   120
-      TabIndex        =   11
+      TabIndex        =   7
       Top             =   1080
       Width           =   6855
-      Begin VB.CommandButton cmdAddPackage 
-         Height          =   615
-         Left            =   6000
-         Picture         =   "frmMain.frx":030A
-         Style           =   1  'Graphical
+      Begin VB.ComboBox Combo3 
+         Height          =   315
+         Left            =   5400
          TabIndex        =   31
-         Top             =   3960
-         Width           =   735
+         Text            =   "cmbPackage"
+         Top             =   1080
+         Width           =   1335
       End
-      Begin VB.CommandButton cmdAddSubCategory 
-         Height          =   615
-         Left            =   6000
-         Picture         =   "frmMain.frx":0614
-         Style           =   1  'Graphical
-         TabIndex        =   30
-         Top             =   3240
-         Width           =   735
-      End
-      Begin VB.CommandButton cmdAddCategory 
-         Height          =   615
-         Left            =   6000
-         Picture         =   "frmMain.frx":0A56
-         Style           =   1  'Graphical
+      Begin VB.ComboBox Combo2 
+         Height          =   315
+         Left            =   2880
          TabIndex        =   29
-         Top             =   2520
-         Width           =   735
+         Text            =   "cmbSubCategory"
+         Top             =   1080
+         Width           =   2295
+      End
+      Begin VB.ComboBox Combo1 
+         Height          =   315
+         Left            =   120
+         TabIndex        =   27
+         Text            =   "cmbCategory"
+         Top             =   1080
+         Width           =   2535
+      End
+      Begin VB.CommandButton cmdExport 
+         Caption         =   "Import Component"
+         Height          =   375
+         Left            =   5040
+         TabIndex        =   25
+         Top             =   5760
+         Width           =   1695
       End
       Begin VB.CheckBox chkExported 
          Caption         =   "Imported"
          Enabled         =   0   'False
          Height          =   375
-         Left            =   2160
-         TabIndex        =   28
-         Top             =   4680
+         Left            =   3720
+         TabIndex        =   24
+         Top             =   5760
          Width           =   975
       End
       Begin VB.CommandButton cmdLast 
          Caption         =   ">|"
-         Height          =   315
-         Left            =   6360
-         TabIndex        =   27
-         Top             =   4680
+         Height          =   375
+         Left            =   2880
+         TabIndex        =   23
+         Top             =   5760
          Width           =   375
       End
       Begin VB.CommandButton cmdNext 
          Caption         =   ">"
-         Height          =   315
-         Left            =   5880
-         TabIndex        =   26
-         Top             =   4680
+         Height          =   375
+         Left            =   2400
+         TabIndex        =   22
+         Top             =   5760
          Width           =   375
       End
       Begin VB.TextBox txtItemNumber 
          Alignment       =   2  'Center
-         Height          =   315
-         Left            =   4560
-         TabIndex        =   24
+         Height          =   375
+         Left            =   1080
+         TabIndex        =   20
          Text            =   "0"
-         Top             =   4680
+         Top             =   5760
          Width           =   615
       End
       Begin VB.CommandButton cmdPrevious 
          Caption         =   "<"
-         Height          =   315
-         Left            =   4080
-         TabIndex        =   23
-         Top             =   4680
+         Height          =   375
+         Left            =   600
+         TabIndex        =   19
+         Top             =   5760
          Width           =   375
       End
       Begin VB.CommandButton cmdFirst 
          Caption         =   "|<"
-         Height          =   315
-         Left            =   3600
-         TabIndex        =   22
-         Top             =   4680
+         Height          =   375
+         Left            =   120
+         TabIndex        =   18
+         Top             =   5760
          Width           =   375
       End
       Begin VB.CommandButton cmdLoadWebsite 
-         Caption         =   "Load Website"
+         Caption         =   "Distributor Website"
          Height          =   375
-         Left            =   120
-         TabIndex        =   21
-         Top             =   4680
-         Width           =   1575
+         Left            =   5040
+         TabIndex        =   17
+         Top             =   2640
+         Width           =   1695
       End
       Begin VB.TextBox txtDatasheetURL 
-         Height          =   315
+         Height          =   375
          Left            =   120
-         TabIndex        =   20
-         Top             =   2040
-         Width           =   6615
+         TabIndex        =   16
+         Top             =   2640
+         Width           =   4695
       End
       Begin MSFlexGridLib.MSFlexGrid grdProperties 
-         Height          =   2055
+         Height          =   2535
          Left            =   120
-         TabIndex        =   18
-         Top             =   2520
-         Width           =   5775
-         _ExtentX        =   10186
-         _ExtentY        =   3625
+         TabIndex        =   14
+         Top             =   3120
+         Width           =   6615
+         _ExtentX        =   11668
+         _ExtentY        =   4471
          _Version        =   393216
          FixedCols       =   0
          GridLines       =   2
@@ -144,54 +141,78 @@ Begin VB.Form frmMain
          Height          =   615
          Left            =   120
          MultiLine       =   -1  'True
-         TabIndex        =   17
-         Top             =   1080
+         TabIndex        =   13
+         Top             =   1680
          Width           =   6615
       End
       Begin VB.TextBox txtQuantity 
          Height          =   315
          Left            =   5400
-         TabIndex        =   15
+         TabIndex        =   11
          Top             =   480
          Width           =   1335
       End
       Begin VB.TextBox txtName 
          Height          =   315
          Left            =   120
-         TabIndex        =   13
+         TabIndex        =   9
          Top             =   480
          Width           =   5055
+      End
+      Begin VB.Label Label9 
+         Caption         =   "Package:"
+         Height          =   255
+         Left            =   5400
+         TabIndex        =   30
+         Top             =   840
+         Width           =   975
+      End
+      Begin VB.Label Label8 
+         Caption         =   "Sub-Category:"
+         Height          =   255
+         Left            =   2880
+         TabIndex        =   28
+         Top             =   840
+         Width           =   1095
+      End
+      Begin VB.Label Label3 
+         Caption         =   "Category:"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   26
+         Top             =   840
+         Width           =   855
       End
       Begin VB.Label lblNumberItems 
          Alignment       =   2  'Center
          Caption         =   "/ 000"
          Height          =   255
-         Left            =   5280
-         TabIndex        =   25
-         Top             =   4750
+         Left            =   1800
+         TabIndex        =   21
+         Top             =   5835
          Width           =   495
       End
       Begin VB.Label Label7 
          Caption         =   "Datasheet URL:"
          Height          =   255
          Left            =   120
-         TabIndex        =   19
-         Top             =   1800
+         TabIndex        =   15
+         Top             =   2400
          Width           =   1335
       End
       Begin VB.Label Label6 
          Caption         =   "Description:"
          Height          =   255
          Left            =   120
-         TabIndex        =   16
-         Top             =   840
+         TabIndex        =   12
+         Top             =   1440
          Width           =   1095
       End
       Begin VB.Label Label5 
          Caption         =   "Quantity:"
          Height          =   255
          Left            =   5400
-         TabIndex        =   14
+         TabIndex        =   10
          Top             =   240
          Width           =   855
       End
@@ -199,40 +220,9 @@ Begin VB.Form frmMain
          Caption         =   "Name:"
          Height          =   255
          Left            =   120
-         TabIndex        =   12
-         Top             =   240
-         Width           =   615
-      End
-   End
-   Begin VB.Frame fraWorkspace 
-      Caption         =   "PartCat Workspace"
-      Height          =   975
-      Left            =   120
-      TabIndex        =   7
-      Top             =   6360
-      Width           =   5415
-      Begin VB.TextBox txtWorkspace 
-         Height          =   315
-         Left            =   120
-         TabIndex        =   10
-         Top             =   480
-         Width           =   4815
-      End
-      Begin VB.CommandButton cmdBrowseWorkspace 
-         Caption         =   "..."
-         Height          =   315
-         Left            =   5040
-         TabIndex        =   9
-         Top             =   480
-         Width           =   375
-      End
-      Begin VB.Label Label3 
-         Caption         =   "Component Export Location:"
-         Height          =   255
-         Left            =   120
          TabIndex        =   8
          Top             =   240
-         Width           =   2175
+         Width           =   615
       End
    End
    Begin VB.Frame fraInput 
@@ -245,9 +235,9 @@ Begin VB.Form frmMain
       Begin VB.ComboBox cmbDistributor 
          Height          =   315
          Index           =   0
-         ItemData        =   "frmMain.frx":0E98
+         ItemData        =   "frmMain.frx":030A
          Left            =   4320
-         List            =   "frmMain.frx":0E9F
+         List            =   "frmMain.frx":0311
          TabIndex        =   5
          Text            =   "Farnell"
          Top             =   480
