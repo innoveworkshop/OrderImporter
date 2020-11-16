@@ -69,43 +69,43 @@ Begin VB.Form frmMain
       End
       Begin VB.CommandButton cmdLast 
          Caption         =   ">|"
-         Height          =   375
+         Height          =   315
          Left            =   2880
          TabIndex        =   23
-         Top             =   5760
+         Top             =   5820
          Width           =   375
       End
       Begin VB.CommandButton cmdNext 
          Caption         =   ">"
-         Height          =   375
+         Height          =   315
          Left            =   2400
          TabIndex        =   22
-         Top             =   5760
+         Top             =   5820
          Width           =   375
       End
       Begin VB.TextBox txtItemNumber 
          Alignment       =   2  'Center
-         Height          =   375
+         Height          =   315
          Left            =   1080
          TabIndex        =   20
          Text            =   "0"
-         Top             =   5760
+         Top             =   5820
          Width           =   615
       End
       Begin VB.CommandButton cmdPrevious 
          Caption         =   "<"
-         Height          =   375
+         Height          =   315
          Left            =   600
          TabIndex        =   19
-         Top             =   5760
+         Top             =   5820
          Width           =   375
       End
       Begin VB.CommandButton cmdFirst 
          Caption         =   "|<"
-         Height          =   375
+         Height          =   315
          Left            =   120
          TabIndex        =   18
-         Top             =   5760
+         Top             =   5820
          Width           =   375
       End
       Begin VB.CommandButton cmdLoadWebsite 
@@ -189,7 +189,7 @@ Begin VB.Form frmMain
          Height          =   255
          Left            =   1800
          TabIndex        =   21
-         Top             =   5835
+         Top             =   5860
          Width           =   495
       End
       Begin VB.Label Label7 
