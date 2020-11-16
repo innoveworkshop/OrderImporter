@@ -36,16 +36,8 @@ Public Sub Export(strPath As String)
     Dim strFolder As String
     Dim hndFile As Integer
     
-    ' Build folder path and check if it already exists.
-    strFolder = strPath & Name & "\"
-    If Dir(strFolder, vbDirectory) <> "" Then
-        MsgBox "Component folder already exists.", vbOKOnly + vbCritical, _
-            "Component Already Exists"
-        Exit Sub
-    End If
-    
-    ' Create the component folder.
-    MkDir strFolder
+    MsgBox "TODO: Convert to database."
+    Exit Sub
     
     ' Write manifest.
     If m_astrProperties(0) <> "" Then
@@ -183,16 +175,6 @@ Private Function ManifestLine(strProperty As String) As String
     
     ' Split the key and value.
     astrProperty = Split(strProperty, ": ")
-    
-    ' Append the "Value-" to needed properties.
-    If (astrProperty(0) <> "Category") And (astrProperty(0) <> "Sub-Category") And _
-            (astrProperty(0) <> "Package") Then
-        astrProperty(0) = VALUE_PROPERTY & astrProperty(0)
-    End If
-    
-    ' Substitute spaces with dashes.
-    astrProperty(0) = Replace(astrProperty(0), " ", "-")
-    
     ManifestLine = astrProperty(0) & ": " & astrProperty(1)
 End Function
 
