@@ -1,7 +1,7 @@
 # PartCat Order Importer
 
 The easiest way to import a whole distributor order into a
-[PartCat](https://github.com/innoveworkshop/PartCat) workspace.
+[PartsCatalog](https://github.com/innoveworkshop/PartsCatalog) database.
 
 ![Screenshot](/Screenshots/2020-07-23.png)
 
