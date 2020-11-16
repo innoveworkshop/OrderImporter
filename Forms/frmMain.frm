@@ -26,27 +26,24 @@ Begin VB.Form frmMain
       TabIndex        =   7
       Top             =   1080
       Width           =   6855
-      Begin VB.ComboBox Combo3 
+      Begin VB.ComboBox cmbPackage 
          Height          =   315
          Left            =   5400
          TabIndex        =   31
-         Text            =   "cmbPackage"
          Top             =   1080
          Width           =   1335
       End
-      Begin VB.ComboBox Combo2 
+      Begin VB.ComboBox cmbSubCategory 
          Height          =   315
          Left            =   2880
          TabIndex        =   29
-         Text            =   "cmbSubCategory"
          Top             =   1080
          Width           =   2295
       End
-      Begin VB.ComboBox Combo1 
+      Begin VB.ComboBox cmbCategory 
          Height          =   315
          Left            =   120
          TabIndex        =   27
-         Text            =   "cmbCategory"
          Top             =   1080
          Width           =   2535
       End
@@ -133,9 +130,13 @@ Begin VB.Form frmMain
          _ExtentY        =   4471
          _Version        =   393216
          FixedCols       =   0
-         GridLines       =   2
+         BackColorBkg    =   -2147483644
+         GridColorFixed  =   -2147483644
+         HighLight       =   2
+         GridLinesFixed  =   0
          SelectionMode   =   1
          AllowUserResizing=   1
+         BorderStyle     =   0
       End
       Begin VB.TextBox txtNotes 
          Height          =   615
