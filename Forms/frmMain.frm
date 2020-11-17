@@ -337,7 +337,7 @@ Begin VB.Form frmMain
          Width           =   1335
       End
       Begin VB.Label Label1 
-         Caption         =   "Exported File Location:"
+         Caption         =   "Order File Location:"
          Height          =   255
          Left            =   120
          TabIndex        =   1
