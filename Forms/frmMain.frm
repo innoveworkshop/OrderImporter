@@ -26,7 +26,7 @@ Begin VB.Form frmMain
       BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
          NumListImages   =   1
          BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":030A
+            Picture         =   "frmMain.frx":3482
             Key             =   "Refresh"
          EndProperty
       EndProperty
@@ -297,9 +297,9 @@ Begin VB.Form frmMain
       Begin VB.ComboBox cmbDistributor 
          Height          =   315
          Index           =   0
-         ItemData        =   "frmMain.frx":6B6C
+         ItemData        =   "frmMain.frx":9CE4
          Left            =   4320
-         List            =   "frmMain.frx":6B73
+         List            =   "frmMain.frx":9CEB
          TabIndex        =   5
          Text            =   "Farnell"
          Top             =   480
@@ -831,6 +831,7 @@ End Sub
 
 ' Help > About menu clicked.
 Private Sub mniHelpAbout_Click()
+    frmAbout.Parent = Me
     frmAbout.Show
 End Sub
 
