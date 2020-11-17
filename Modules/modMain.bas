@@ -16,6 +16,27 @@ Private Declare Function LoadLibrary Lib "kernel32.dll" Alias "LoadLibraryA" (By
 Private Declare Function FreeLibrary Lib "kernel32.dll" (ByVal hLibModule As Long) As Long
 Private Declare Function InitCommonControlsEx Lib "comctl32.dll" (iccex As InitCommonControlsExStruct) As Boolean
 
+' Handles command-line arguments.
+Private Sub HandleArguments()
+    Dim astrArguments() As String
+    Dim intIndex As Integer
+    
+    ' Split arguments and check if their number is right.
+    astrArguments = Split(Command$, " ")
+    If UBound(astrArguments) > 0 Then
+        MsgBox "Invalid number of arguments given to the application." & vbCrLf & _
+            vbCrLf & "Usage: OrderImporter.exe [DBPath]", vbInformation + _
+            vbOKOnly, "Invalid Command-Line Arguements"
+        
+        End
+    End If
+    
+    ' Check for a database being passed to us.
+    If UBound(astrArguments) = 0 Then
+        frmMain.OpenDatabaseFile astrArguments(0)
+    End If
+End Sub
+
 ' Application main entry point.
 Private Sub Main()
     Dim iccex As InitCommonControlsExStruct, hMod As Long
@@ -34,7 +55,9 @@ Private Sub Main()
         Err.Clear
     End If
     On Error GoTo 0
+    
     frmMain.Show
+    HandleArguments
     
     If hMod Then FreeLibrary hMod
 

@@ -447,7 +447,7 @@ Attribute VB_Exposed = False
 Option Explicit
 
 ' Browse for PartsCatalog database.
-Private Sub OpenDatabaseFile(Optional strPath As String = vbNullString)
+Public Sub OpenDatabaseFile(Optional strPath As String = vbNullString)
     Dim strSetPath As String
     strSetPath = strPath
     
