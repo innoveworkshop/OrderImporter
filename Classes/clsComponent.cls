@@ -23,54 +23,74 @@ Private m_lngQuantity As Long
 Private m_strNotes As String
 Private m_strDatasheet As String
 Private m_astrProperties() As String
+Private m_intCategoryID As Integer
+Private m_intSubCategoryID As Integer
+Private m_intPackageID As Integer
 Private m_strSearchCode As String
 Private m_blnExported As Boolean
+
+' Class initializer.
+Private Sub Class_Initialize()
+    CategoryID = -1
+    SubCategoryID = -1
+    PackageID = -1
+End Sub
 
 ' Initializes the properties array.
 Public Sub InitializeProperties(intSize As Integer)
     ReDim m_astrProperties(intSize)
 End Sub
 
-' Export the component to a root path where the folder will be placed in.
-Public Sub Export(strPath As String)
-    Dim strFolder As String
-    Dim hndFile As Integer
+' Export the component to the database and download the datasheet.
+Public Sub Export()
+    Dim strProperties As String
     
-    MsgBox "TODO: Convert to database."
-    Exit Sub
+    ' Check if we have an opened database.
+    If Not IsDatabaseAssociated Then
+        MsgBox "There isn't a database currently opened. Open one before " & _
+            "trying to import a component.", vbOKOnly + vbExclamation, _
+            "No Database Associated"
+        Exit Sub
+    End If
     
-    ' Write manifest.
+    ' Get the component properties.
     If m_astrProperties(0) <> "" Then
-        hndFile = FreeFile
-        Open strFolder & MANIFEST_FILE For Output As #hndFile
-            Dim intIndex As Integer
-            For intIndex = 0 To UBound(m_astrProperties)
-                Print #hndFile, ManifestLine(m_astrProperties(intIndex))
-            Next intIndex
-        Close #hndFile
+        Dim intIndex As Integer
+        For intIndex = 0 To UBound(m_astrProperties)
+            Debug.Print "Property", intIndex, ManifestLine(m_astrProperties(intIndex))
+            
+            ' Include the property separator.
+            If intIndex > 0 Then
+                strProperties = strProperties & vbTab
+            End If
+            
+            ' Append the property.
+            strProperties = strProperties & ManifestLine(m_astrProperties(intIndex))
+        Next intIndex
+        
+        Debug.Print "Properties", strProperties
     End If
     
     ' Write quantity.
-    hndFile = FreeFile
-    Open strFolder & QUANTITY_FILE For Output As #hndFile
-        Print #hndFile, CStr(Quantity)
-    Close #hndFile
+    Debug.Print "Quantity", Quantity
     
     ' Write notes.
-    hndFile = FreeFile
-    Open strFolder & NOTES_FILE For Output As #hndFile
-        Print #hndFile, Notes
-    Close #hndFile
+    Debug.Print "Description", Notes
+    
+    Debug.Print "Category", CategoryID
+    Debug.Print "Sub-Category", SubCategoryID
+    Debug.Print "Pakcage", PackageID
     
     ' Download datasheet.
     If m_strDatasheet <> "" Then
-        If Not DownloadFile(m_strDatasheet, strFolder & DATASHEET_FILE) Then
-            MsgBox "Failed to download the component datasheet.", _
-                vbOKOnly + vbExclamation, "Download Failed"
-            
-            Exported = False
-            Exit Sub
-        End If
+        MsgBox "Datasheet download not implemented yet."
+        'If Not DownloadFile(m_strDatasheet, strFolder & DATASHEET_FILE) Then
+        '    MsgBox "Failed to download the component datasheet.", _
+        '        vbOKOnly + vbExclamation, "Download Failed"
+        '
+        '    Exported = False
+        '    Exit Sub
+        'End If
     End If
     
     Exported = True
@@ -238,6 +258,36 @@ End Property
 ' Notes setter.
 Public Property Let Notes(strNotes As String)
     m_strNotes = strNotes
+End Property
+
+' Category ID getter.
+Public Property Get CategoryID() As Integer
+    CategoryID = m_intCategoryID
+End Property
+
+' Category ID setter.
+Public Property Let CategoryID(intCategoryID As Integer)
+    m_intCategoryID = intCategoryID
+End Property
+
+' Sub-Category ID getter.
+Public Property Get SubCategoryID() As Integer
+    SubCategoryID = m_intSubCategoryID
+End Property
+
+' Sub-Category ID setter.
+Public Property Let SubCategoryID(intSubCategoryID As Integer)
+    m_intSubCategoryID = intSubCategoryID
+End Property
+
+' Package ID getter.
+Public Property Get PackageID() As Integer
+    PackageID = m_intPackageID
+End Property
+
+' Package ID setter.
+Public Property Let PackageID(intPackageID As Integer)
+    m_intPackageID = intPackageID
 End Property
 
 ' Datasheet getter.

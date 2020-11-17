@@ -531,6 +531,11 @@ Public Sub ShowComponent(lngIndex As Long)
     txtNotes.Text = component.Notes
     txtDatasheetURL.Text = component.Datasheet
     
+    ' Set comboboxes.
+    SelectListItemByItemData cmbCategory, component.CategoryID
+    SelectListItemByItemData cmbSubCategory, component.SubCategoryID
+    SelectListItemByItemData cmbPackage, component.PackageID
+    
     ' Set the exported checkbox.
     If component.Exported Then
         chkExported.Value = vbChecked
@@ -576,6 +581,49 @@ Public Sub SaveCurrentComponent()
     component.Notes = txtNotes.Text
     component.Datasheet = txtDatasheetURL.Text
     component.Quantity = CLng(txtQuantity.Text)
+    
+    ' Save the category.
+    If cmbCategory.ListIndex <> -1 Then
+        component.CategoryID = cmbCategory.ItemData(cmbCategory.ListIndex)
+    Else
+        component.CategoryID = -1
+    End If
+    
+    ' Save the sub-category.
+    If cmbSubCategory.ListIndex <> -1 Then
+        component.SubCategoryID = cmbSubCategory.ItemData(cmbSubCategory.ListIndex)
+    Else
+        component.SubCategoryID = -1
+    End If
+    
+    ' Save the package.
+    If cmbPackage.ListIndex <> -1 Then
+        component.PackageID = cmbPackage.ItemData(cmbPackage.ListIndex)
+    Else
+        component.PackageID = -1
+    End If
+End Sub
+
+' Selects a ComboBox item based on its ItemData ID.
+Public Sub SelectListItemByItemData(cmbBox As ComboBox, intItemData As Integer, _
+        Optional blnMinusOneDeselects As Boolean = True)
+    Dim intIndex As Integer
+    
+    ' Check if we should treat the -1 ItemData as a deselection.
+    If (intItemData = -1) And blnMinusOneDeselects Then
+        cmbBox.ListIndex = -1
+    End If
+    
+    ' Go through looking for a matching ItemData.
+    For intIndex = 0 To cmbBox.ListCount - 1
+        If cmbBox.ItemData(intIndex) = intItemData Then
+            cmbBox.ListIndex = intIndex
+            Exit Sub
+        End If
+    Next intIndex
+    
+    ' Failed to find one. Perform a deselection just in case.
+    cmbBox.ListIndex = -1
 End Sub
 
 ' Deletes the currently selected property.
@@ -605,8 +653,12 @@ End Sub
 
 ' Category selection updated.
 Private Sub cmbCategory_Click()
-    LoadSubCategories cmbCategory.ItemData(cmbCategory.ListIndex), _
-        cmbSubCategory
+    If cmbCategory.ListIndex <> -1 Then
+        LoadSubCategories cmbCategory.ItemData(cmbCategory.ListIndex), _
+            cmbSubCategory
+    Else
+        cmbSubCategory.Clear
+    End If
 End Sub
 
 ' Browse for the order file to load.
