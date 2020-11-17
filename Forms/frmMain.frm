@@ -26,7 +26,7 @@ Begin VB.Form frmMain
       BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
          NumListImages   =   1
          BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":3482
+            Picture         =   "frmMain.frx":6852
             Key             =   "Refresh"
          EndProperty
       EndProperty
@@ -297,9 +297,9 @@ Begin VB.Form frmMain
       Begin VB.ComboBox cmbDistributor 
          Height          =   315
          Index           =   0
-         ItemData        =   "frmMain.frx":9CE4
+         ItemData        =   "frmMain.frx":D0B4
          Left            =   4320
-         List            =   "frmMain.frx":9CEB
+         List            =   "frmMain.frx":D0BB
          TabIndex        =   5
          Text            =   "Farnell"
          Top             =   480
