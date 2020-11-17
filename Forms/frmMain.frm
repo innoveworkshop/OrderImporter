@@ -726,6 +726,9 @@ End Sub
 
 ' Form just loaded.
 Private Sub Form_Load()
+    ' Set application icon.
+    SetIcon Me.hWnd, "AAA_APPICON", True
+    
     ' Setup the Flex Grid.
     grdProperties.TextMatrix(0, 0) = "Property"
     grdProperties.TextMatrix(0, 1) = "Value"
