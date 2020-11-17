@@ -4,13 +4,13 @@ Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmMain 
    Caption         =   "Order Importer"
-   ClientHeight    =   9000
+   ClientHeight    =   9120
    ClientLeft      =   165
    ClientTop       =   810
    ClientWidth     =   7110
    Icon            =   "frmMain.frx":0000
    LinkTopic       =   "Form1"
-   ScaleHeight     =   9000
+   ScaleHeight     =   9120
    ScaleWidth      =   7110
    StartUpPosition =   3  'Windows Default
    Begin VB.Frame fraDatabase 
@@ -45,8 +45,8 @@ Begin VB.Form frmMain
       End
    End
    Begin MSComctlLib.ImageList imlButtons 
-      Left            =   3960
-      Top             =   2520
+      Left            =   4800
+      Top             =   6960
       _ExtentX        =   1005
       _ExtentY        =   1005
       BackColor       =   -2147483643
@@ -63,8 +63,8 @@ Begin VB.Form frmMain
       EndProperty
    End
    Begin MSComDlg.CommonDialog dlgCommon 
-      Left            =   3360
-      Top             =   2520
+      Left            =   4080
+      Top             =   6960
       _ExtentX        =   847
       _ExtentY        =   847
       _Version        =   393216
@@ -74,7 +74,7 @@ Begin VB.Form frmMain
       Height          =   6255
       Left            =   120
       TabIndex        =   7
-      Top             =   2640
+      Top             =   2760
       Width           =   6855
       Begin VB.PictureBox picRefreshPackages 
          Appearance      =   0  'Flat
@@ -329,12 +329,12 @@ Begin VB.Form frmMain
          Height          =   315
          Index           =   0
          ItemData        =   "frmMain.frx":D0B4
-         Left            =   4800
+         Left            =   5040
          List            =   "frmMain.frx":D0BB
          TabIndex        =   5
          Text            =   "Farnell"
          Top             =   480
-         Width           =   1935
+         Width           =   1695
       End
       Begin VB.CommandButton cmdImport 
          Caption         =   "Load Order"
@@ -347,7 +347,7 @@ Begin VB.Form frmMain
       Begin VB.CommandButton cmdBrowseOrder 
          Caption         =   "..."
          Height          =   315
-         Left            =   4200
+         Left            =   4440
          TabIndex        =   3
          Top             =   480
          Width           =   375
@@ -357,12 +357,12 @@ Begin VB.Form frmMain
          Left            =   120
          TabIndex        =   2
          Top             =   480
-         Width           =   3975
+         Width           =   4215
       End
       Begin VB.Label Label2 
          Caption         =   "Distributor:"
          Height          =   255
-         Left            =   4800
+         Left            =   5040
          TabIndex        =   6
          Top             =   240
          Width           =   1335
@@ -467,9 +467,12 @@ Private Sub OpenDatabaseFile(Optional strPath As String = vbNullString)
     ' Set the database path.
     If strSetPath <> vbNullString Then
         SetDatabasePath strSetPath
+        txtDatabaseLocation.Text = strSetPath
         
         ' Populate database-dependent components.
         PopulateComboBoxes
+    Else
+        txtDatabaseLocation.Text = ""
     End If
 End Sub
 
@@ -683,6 +686,11 @@ Private Sub cmbCategory_Click()
     Else
         cmbSubCategory.Clear
     End If
+End Sub
+
+' Database browse button clicked.
+Private Sub cmdBrowseDatabase_Click()
+    OpenDatabaseFile
 End Sub
 
 ' Browse for the order file to load.
