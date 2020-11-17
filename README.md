@@ -16,6 +16,26 @@ used with the CSV file that is exported from the Order Status view, not a
 shopping cart.
 
 
+## Building
+
+If you want to build this program or contribute to it make sure that you have
+the appropriate environment set up. You'll need a copy of Visual Basic 6.0,
+which you can eaily download from [WinWorld](https://winworldpc.com/product/microsoft-visual-stu/60),
+if you plan on installing it under any modern version of Windows, make sure to
+search for a tutorial first before you litter your system with old, unuseable,
+crap. After that's all done you'll need to download a copy of the
+[PartsCatalog](https://github.com/innoveworkshop/PartsCatalog) project and have
+a folder structure that looks somewhat like this:
+
+    \<Dev Folder>\OrderImporter\
+	\<Dev Folder>\PartsCatalog\
+
+The name and relative path of the project folders is important because
+OrderImporter requires some components from the PartsCatalog project that are
+shared, and VB6 uses relative paths for that, so the names and locations are
+important.
+
+
 ## Why Visual Basic 6?
 
 I've used the dreaded VB6 for this project for two main reasons: First of all
