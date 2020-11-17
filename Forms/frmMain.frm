@@ -4,18 +4,49 @@ Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmMain 
    Caption         =   "Order Importer"
-   ClientHeight    =   7500
+   ClientHeight    =   9000
    ClientLeft      =   165
    ClientTop       =   810
    ClientWidth     =   7110
    Icon            =   "frmMain.frx":0000
    LinkTopic       =   "Form1"
-   ScaleHeight     =   7500
+   ScaleHeight     =   9000
    ScaleWidth      =   7110
    StartUpPosition =   3  'Windows Default
+   Begin VB.Frame fraDatabase 
+      Caption         =   "Database"
+      Height          =   975
+      Left            =   120
+      TabIndex        =   35
+      Top             =   0
+      Width           =   6855
+      Begin VB.TextBox txtDatabaseLocation 
+         Height          =   315
+         Left            =   120
+         TabIndex        =   37
+         Top             =   480
+         Width           =   6135
+      End
+      Begin VB.CommandButton cmdBrowseDatabase 
+         Caption         =   "..."
+         Height          =   315
+         Left            =   6360
+         TabIndex        =   36
+         Top             =   480
+         Width           =   375
+      End
+      Begin VB.Label Label10 
+         Caption         =   "PartsCatalog Database Location:"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   38
+         Top             =   240
+         Width           =   2415
+      End
+   End
    Begin MSComctlLib.ImageList imlButtons 
-      Left            =   4320
-      Top             =   840
+      Left            =   3960
+      Top             =   2520
       _ExtentX        =   1005
       _ExtentY        =   1005
       BackColor       =   -2147483643
@@ -32,8 +63,8 @@ Begin VB.Form frmMain
       EndProperty
    End
    Begin MSComDlg.CommonDialog dlgCommon 
-      Left            =   3600
-      Top             =   840
+      Left            =   3360
+      Top             =   2520
       _ExtentX        =   847
       _ExtentY        =   847
       _Version        =   393216
@@ -43,7 +74,7 @@ Begin VB.Form frmMain
       Height          =   6255
       Left            =   120
       TabIndex        =   7
-      Top             =   1080
+      Top             =   2640
       Width           =   6855
       Begin VB.PictureBox picRefreshPackages 
          Appearance      =   0  'Flat
@@ -289,34 +320,34 @@ Begin VB.Form frmMain
    End
    Begin VB.Frame fraInput 
       Caption         =   "Distributor Order"
-      Height          =   975
+      Height          =   1455
       Left            =   120
       TabIndex        =   0
-      Top             =   0
+      Top             =   1080
       Width           =   6855
       Begin VB.ComboBox cmbDistributor 
          Height          =   315
          Index           =   0
          ItemData        =   "frmMain.frx":D0B4
-         Left            =   4320
+         Left            =   4800
          List            =   "frmMain.frx":D0BB
          TabIndex        =   5
          Text            =   "Farnell"
          Top             =   480
-         Width           =   1335
+         Width           =   1935
       End
       Begin VB.CommandButton cmdImport 
          Caption         =   "Load Order"
-         Height          =   615
-         Left            =   5880
+         Height          =   375
+         Left            =   120
          TabIndex        =   4
-         Top             =   240
-         Width           =   855
+         Top             =   960
+         Width           =   6615
       End
       Begin VB.CommandButton cmdBrowseOrder 
          Caption         =   "..."
          Height          =   315
-         Left            =   3720
+         Left            =   4200
          TabIndex        =   3
          Top             =   480
          Width           =   375
@@ -326,12 +357,12 @@ Begin VB.Form frmMain
          Left            =   120
          TabIndex        =   2
          Top             =   480
-         Width           =   3495
+         Width           =   3975
       End
       Begin VB.Label Label2 
          Caption         =   "Distributor:"
          Height          =   255
-         Left            =   4320
+         Left            =   4800
          TabIndex        =   6
          Top             =   240
          Width           =   1335
