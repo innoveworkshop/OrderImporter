@@ -1,6 +1,7 @@
 VERSION 5.00
 Object = "{5E9E78A0-531B-11CF-91F6-C2863C385E30}#1.0#0"; "MSFLXGRD.OCX"
 Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmMain 
    Caption         =   "Order Importer"
    ClientHeight    =   7500
@@ -12,6 +13,24 @@ Begin VB.Form frmMain
    ScaleHeight     =   7500
    ScaleWidth      =   7110
    StartUpPosition =   3  'Windows Default
+   Begin MSComctlLib.ImageList imlButtons 
+      Left            =   4320
+      Top             =   840
+      _ExtentX        =   1005
+      _ExtentY        =   1005
+      BackColor       =   -2147483643
+      ImageWidth      =   16
+      ImageHeight     =   16
+      MaskColor       =   12632256
+      _Version        =   393216
+      BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
+         NumListImages   =   1
+         BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
+            Picture         =   "frmMain.frx":030A
+            Key             =   "Refresh"
+         EndProperty
+      EndProperty
+   End
    Begin MSComDlg.CommonDialog dlgCommon 
       Left            =   3600
       Top             =   960
@@ -26,6 +45,48 @@ Begin VB.Form frmMain
       TabIndex        =   7
       Top             =   1080
       Width           =   6855
+      Begin VB.PictureBox picRefreshPackages 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000004&
+         BorderStyle     =   0  'None
+         FillColor       =   &H80000005&
+         ForeColor       =   &H80000008&
+         Height          =   255
+         Left            =   6480
+         ScaleHeight     =   255
+         ScaleWidth      =   255
+         TabIndex        =   34
+         Top             =   810
+         Width           =   255
+      End
+      Begin VB.PictureBox picRefreshSubCategories 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000004&
+         BorderStyle     =   0  'None
+         FillColor       =   &H80000005&
+         ForeColor       =   &H80000008&
+         Height          =   255
+         Left            =   4920
+         ScaleHeight     =   255
+         ScaleWidth      =   255
+         TabIndex        =   33
+         Top             =   810
+         Width           =   255
+      End
+      Begin VB.PictureBox picRefreshCategories 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000004&
+         BorderStyle     =   0  'None
+         FillColor       =   &H80000005&
+         ForeColor       =   &H80000008&
+         Height          =   255
+         Left            =   2400
+         ScaleHeight     =   255
+         ScaleWidth      =   255
+         TabIndex        =   32
+         Top             =   810
+         Width           =   255
+      End
       Begin VB.ComboBox cmbPackage 
          Height          =   315
          Left            =   5400
@@ -236,9 +297,9 @@ Begin VB.Form frmMain
       Begin VB.ComboBox cmbDistributor 
          Height          =   315
          Index           =   0
-         ItemData        =   "frmMain.frx":030A
+         ItemData        =   "frmMain.frx":6B6C
          Left            =   4320
-         List            =   "frmMain.frx":0311
+         List            =   "frmMain.frx":6B73
          TabIndex        =   5
          Text            =   "Farnell"
          Top             =   480
@@ -407,11 +468,6 @@ Private Sub PopulateComboBoxes()
             "No Database Associated"
         Exit Sub
     End If
-    
-    ' Clear them first.
-    cmbCategory.Clear
-    cmbSubCategory.Clear
-    cmbPackage.Clear
     
     ' Load data into them.
     LoadPackages cmbPackage
@@ -631,6 +687,11 @@ Private Sub Form_Load()
     grdProperties.ColWidth(0) = (grdProperties.Width / 2) - 45
     grdProperties.ColWidth(1) = (grdProperties.Width / 2) - 45
     
+    ' Setup the image buttons.
+    picRefreshCategories.Picture = imlButtons.ListImages("Refresh").ExtractIcon
+    picRefreshSubCategories.Picture = imlButtons.ListImages("Refresh").ExtractIcon
+    picRefreshPackages.Picture = imlButtons.ListImages("Refresh").ExtractIcon
+    
     ' Disable the component panel and menu.
     fraComponent.Enabled = False
     mnuComponent.Enabled = False
@@ -726,4 +787,22 @@ End Sub
 ' Help > About menu clicked.
 Private Sub mniHelpAbout_Click()
     frmAbout.Show
+End Sub
+
+' Refresh categories button clicked.
+Private Sub picRefreshCategories_Click()
+    LoadCategories cmbCategory
+End Sub
+
+' Refresh packages button clicked.
+Private Sub picRefreshPackages_Click()
+    LoadPackages cmbPackage
+End Sub
+
+' Refresh sub-categories button clicked.
+Private Sub picRefreshSubCategories_Click()
+    If cmbCategory.ListIndex <> -1 Then
+        LoadSubCategories cmbCategory.ItemData(cmbCategory.ListIndex), _
+            cmbSubCategory
+    End If
 End Sub
