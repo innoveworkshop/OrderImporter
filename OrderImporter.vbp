@@ -16,6 +16,7 @@ Form=Forms\frmAbout.frm
 Module=modDatabase; ..\PartsCatalog\Modules\modDatabase.bas
 Class=SQLStatement; ..\PartsCatalog\Classes\SQLStatement.cls
 Object={831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0; MSCOMCTL.OCX
+Module=modAssetsHandler; ..\PartsCatalog\Modules\modAssetsHandler.bas
 IconForm="frmMain"
 Startup="frmMain"
 HelpFile=""
