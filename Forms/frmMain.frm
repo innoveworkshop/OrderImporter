@@ -497,13 +497,6 @@ Private Sub ImportCurrentComponent()
     SaveCurrentComponent
     Set component = GetCurrentComponent
     
-    ' Check if the current component has already been exported.
-    If component.Exported Then
-        MsgBox "Currently we can't modify a component that has already been imported.", _
-            vbOKOnly + vbCritical, "Operation Not Permitted"
-        Exit Sub
-    End If
-    
     ' Set the component as exported.
     component.Export
     ShowComponent CLng(txtItemNumber.Text)

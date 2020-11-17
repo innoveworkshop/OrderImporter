@@ -26,11 +26,13 @@ Private m_astrProperties() As String
 Private m_intCategoryID As Integer
 Private m_intSubCategoryID As Integer
 Private m_intPackageID As Integer
+Private m_lngPartID As Long
 Private m_strSearchCode As String
 Private m_blnExported As Boolean
 
 ' Class initializer.
 Private Sub Class_Initialize()
+    PartID = -1
     CategoryID = -1
     SubCategoryID = -1
     PackageID = -1
@@ -43,8 +45,6 @@ End Sub
 
 ' Export the component to the database and download the datasheet.
 Public Sub Export()
-    Dim strProperties As String
-    
     ' Check if we have an opened database.
     If Not IsDatabaseAssociated Then
         MsgBox "There isn't a database currently opened. Open one before " & _
@@ -53,44 +53,19 @@ Public Sub Export()
         Exit Sub
     End If
     
-    ' Get the component properties.
-    If m_astrProperties(0) <> "" Then
-        Dim intIndex As Integer
-        For intIndex = 0 To UBound(m_astrProperties)
-            Debug.Print "Property", intIndex, ManifestLine(m_astrProperties(intIndex))
-            
-            ' Include the property separator.
-            If intIndex > 0 Then
-                strProperties = strProperties & vbTab
-            End If
-            
-            ' Append the property.
-            strProperties = strProperties & ManifestLine(m_astrProperties(intIndex))
-        Next intIndex
-        
-        Debug.Print "Properties", strProperties
-    End If
-    
-    ' Write quantity.
-    Debug.Print "Quantity", Quantity
-    
-    ' Write notes.
-    Debug.Print "Description", Notes
-    
-    Debug.Print "Category", CategoryID
-    Debug.Print "Sub-Category", SubCategoryID
-    Debug.Print "Pakcage", PackageID
+    ' Save the component to the database.
+    PartID = SaveComponent(PartID, Name, CStr(Quantity), Notes, CategoryID, _
+        SubCategoryID, PackageID, PropertiesAsString)
     
     ' Download datasheet.
-    If m_strDatasheet <> "" Then
-        MsgBox "Datasheet download not implemented yet."
-        'If Not DownloadFile(m_strDatasheet, strFolder & DATASHEET_FILE) Then
-        '    MsgBox "Failed to download the component datasheet.", _
-        '        vbOKOnly + vbExclamation, "Download Failed"
-        '
-        '    Exported = False
-        '    Exit Sub
-        'End If
+    If Datasheet <> "" Then
+        If Not DownloadComponentDatasheet(Name, Datasheet) Then
+            MsgBox "Failed to download the component datasheet.", _
+                vbOKOnly + vbExclamation, "Download Failed"
+        
+            Exported = False
+            Exit Sub
+        End If
     End If
     
     Exported = True
@@ -189,13 +164,26 @@ Public Sub RemoveInvalidProperties()
     Next intIndex
 End Sub
 
-' Makes a manifest file line from a property in the array.
-Private Function ManifestLine(strProperty As String) As String
-    Dim astrProperty() As String
+' Creates a database properties string.
+Private Function PropertiesAsString() As String
+    Dim strProperties As String
     
-    ' Split the key and value.
-    astrProperty = Split(strProperty, ": ")
-    ManifestLine = astrProperty(0) & ": " & astrProperty(1)
+    ' Check if there are any properties to return.
+    If m_astrProperties(0) <> "" Then
+        Dim intIndex As Integer
+        
+        For intIndex = 0 To UBound(m_astrProperties)
+            ' Include the property separator.
+            If intIndex > 0 Then
+                strProperties = strProperties & vbTab
+            End If
+            
+            ' Append the property.
+            strProperties = strProperties & m_astrProperties(intIndex)
+        Next intIndex
+    End If
+    
+    PropertiesAsString = strProperties
 End Function
 
 ' Checks if a property line is valid.
@@ -258,6 +246,16 @@ End Property
 ' Notes setter.
 Public Property Let Notes(strNotes As String)
     m_strNotes = strNotes
+End Property
+
+' Database ID getter.
+Public Property Get PartID() As Long
+    PartID = m_lngPartID
+End Property
+
+' Database ID setter.
+Public Property Let PartID(lngPartID As Long)
+    m_lngPartID = lngPartID
 End Property
 
 ' Category ID getter.
