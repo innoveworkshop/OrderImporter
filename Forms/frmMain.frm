@@ -33,7 +33,7 @@ Begin VB.Form frmMain
    End
    Begin MSComDlg.CommonDialog dlgCommon 
       Left            =   3600
-      Top             =   960
+      Top             =   840
       _ExtentX        =   847
       _ExtentY        =   847
       _Version        =   393216
@@ -52,11 +52,11 @@ Begin VB.Form frmMain
          FillColor       =   &H80000005&
          ForeColor       =   &H80000008&
          Height          =   255
-         Left            =   6480
+         Left            =   6520
          ScaleHeight     =   255
          ScaleWidth      =   255
          TabIndex        =   34
-         Top             =   810
+         Top             =   510
          Width           =   255
       End
       Begin VB.PictureBox picRefreshSubCategories 
@@ -66,11 +66,11 @@ Begin VB.Form frmMain
          FillColor       =   &H80000005&
          ForeColor       =   &H80000008&
          Height          =   255
-         Left            =   4920
+         Left            =   6520
          ScaleHeight     =   255
          ScaleWidth      =   255
          TabIndex        =   33
-         Top             =   810
+         Top             =   1110
          Width           =   255
       End
       Begin VB.PictureBox picRefreshCategories 
@@ -80,33 +80,33 @@ Begin VB.Form frmMain
          FillColor       =   &H80000005&
          ForeColor       =   &H80000008&
          Height          =   255
-         Left            =   2400
+         Left            =   3280
          ScaleHeight     =   255
          ScaleWidth      =   255
          TabIndex        =   32
-         Top             =   810
+         Top             =   1110
          Width           =   255
       End
       Begin VB.ComboBox cmbPackage 
          Height          =   315
-         Left            =   5400
+         Left            =   4920
          TabIndex        =   31
-         Top             =   1080
-         Width           =   1335
+         Top             =   480
+         Width           =   1575
       End
       Begin VB.ComboBox cmbSubCategory 
          Height          =   315
-         Left            =   2880
+         Left            =   3720
          TabIndex        =   29
          Top             =   1080
-         Width           =   2295
+         Width           =   2775
       End
       Begin VB.ComboBox cmbCategory 
          Height          =   315
          Left            =   120
          TabIndex        =   27
          Top             =   1080
-         Width           =   2535
+         Width           =   3135
       End
       Begin VB.CommandButton cmdExport 
          Caption         =   "Import Component"
@@ -168,14 +168,14 @@ Begin VB.Form frmMain
       End
       Begin VB.CommandButton cmdLoadWebsite 
          Caption         =   "Distributor Website"
-         Height          =   375
+         Height          =   555
          Left            =   5040
          TabIndex        =   17
-         Top             =   2640
+         Top             =   2400
          Width           =   1695
       End
       Begin VB.TextBox txtDatasheetURL 
-         Height          =   375
+         Height          =   315
          Left            =   120
          TabIndex        =   16
          Top             =   2640
@@ -185,7 +185,7 @@ Begin VB.Form frmMain
          Height          =   2535
          Left            =   120
          TabIndex        =   14
-         Top             =   3120
+         Top             =   3000
          Width           =   6615
          _ExtentX        =   11668
          _ExtentY        =   4471
@@ -209,7 +209,7 @@ Begin VB.Form frmMain
       End
       Begin VB.TextBox txtQuantity 
          Height          =   315
-         Left            =   5400
+         Left            =   3360
          TabIndex        =   11
          Top             =   480
          Width           =   1335
@@ -219,20 +219,20 @@ Begin VB.Form frmMain
          Left            =   120
          TabIndex        =   9
          Top             =   480
-         Width           =   5055
+         Width           =   3015
       End
       Begin VB.Label Label9 
          Caption         =   "Package:"
          Height          =   255
-         Left            =   5400
+         Left            =   4920
          TabIndex        =   30
-         Top             =   840
+         Top             =   240
          Width           =   975
       End
       Begin VB.Label Label8 
          Caption         =   "Sub-Category:"
          Height          =   255
-         Left            =   2880
+         Left            =   3720
          TabIndex        =   28
          Top             =   840
          Width           =   1095
@@ -273,7 +273,7 @@ Begin VB.Form frmMain
       Begin VB.Label Label5 
          Caption         =   "Quantity:"
          Height          =   255
-         Left            =   5400
+         Left            =   3360
          TabIndex        =   10
          Top             =   240
          Width           =   855
@@ -732,8 +732,8 @@ Private Sub Form_Load()
     ' Setup the Flex Grid.
     grdProperties.TextMatrix(0, 0) = "Property"
     grdProperties.TextMatrix(0, 1) = "Value"
-    grdProperties.ColWidth(0) = (grdProperties.Width / 2) - 45
-    grdProperties.ColWidth(1) = (grdProperties.Width / 2) - 45
+    grdProperties.ColWidth(0) = (grdProperties.Width / 2) - 5
+    grdProperties.ColWidth(1) = (grdProperties.Width / 2) - 5
     
     ' Setup the image buttons.
     picRefreshCategories.Picture = imlButtons.ListImages("Refresh").ExtractIcon
