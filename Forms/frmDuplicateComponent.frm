@@ -17,7 +17,7 @@ Begin VB.Form frmDuplicateComponent
    Begin VB.CommandButton cmdImportAnyway 
       Caption         =   "Import As New"
       Height          =   375
-      Left            =   1680
+      Left            =   120
       TabIndex        =   17
       Top             =   3120
       Width           =   1695
@@ -25,12 +25,13 @@ Begin VB.Form frmDuplicateComponent
    Begin VB.CommandButton cmdUpdateQuantity 
       Caption         =   "Update Quantity"
       Height          =   375
-      Left            =   3600
+      Left            =   2040
       TabIndex        =   16
       Top             =   3120
       Width           =   1695
    End
    Begin VB.CommandButton cmdCancel 
+      Cancel          =   -1  'True
       Caption         =   "Cancel"
       Height          =   375
       Left            =   5520
@@ -181,7 +182,15 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
+' Private enumerations.
+Public Enum Action
+    actNothing
+    actUpdateQuantity
+    actImportAnyway
+End Enum
+
 ' Private variables.
+Private m_actAction As Action
 Private m_lngID As Long
 
 ' Positions this dialog by the side of an anchor frame in the parent window.
@@ -273,8 +282,37 @@ PictureError:
         vbOKOnly + vbCritical, "Image Loading Error"
 End Sub
 
+' Cancel the whole thing.
+Private Sub cmdCancel_Click()
+    DoAction = actNothing
+    Unload Me
+End Sub
+
+' Import this thing anyway.
+Private Sub cmdImportAnyway_Click()
+    DoAction = actImportAnyway
+    Unload Me
+End Sub
+
+' Just update the quantity.
+Private Sub cmdUpdateQuantity_Click()
+    DoAction = actUpdateQuantity
+    Unload Me
+End Sub
+
 ' Form just loaded up.
 Private Sub Form_Load()
     ' Reset variables.
     m_lngID = -1
+    DoAction = actNothing
 End Sub
+
+' Gets the action to be taken.
+Public Property Get DoAction() As Action
+    DoAction = m_actAction
+End Property
+
+' Sets the action to be taken.
+Public Property Let DoAction(actAction As Action)
+    m_actAction = actAction
+End Property
