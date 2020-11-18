@@ -336,6 +336,6 @@ Public Property Get Quantity() As Long
 End Property
 
 ' Sets the quantity of the duplicate component.
-Public Property Let Quantity(lngQuantity)
+Public Property Let Quantity(lngQuantity As Long)
     m_lngQuantity = lngQuantity
 End Property
