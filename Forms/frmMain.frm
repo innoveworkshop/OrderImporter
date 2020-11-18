@@ -531,6 +531,8 @@ Private Function CheckDuplicates(strName As String, _
         Optional blnShowNoDuplicateDialog As Boolean = False) As Boolean
     Dim lngID As Long
     
+    frmDuplicateComponent.PositionBySide Me, fraComponent
+    LoadComponentDetail 10, frmDuplicateComponent
     frmDuplicateComponent.Show vbModal, Me
     Exit Function
     
