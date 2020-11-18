@@ -192,6 +192,7 @@ End Enum
 ' Private variables.
 Private m_actAction As Action
 Private m_lngID As Long
+Private m_lngQuantity As Long
 
 ' Positions this dialog by the side of an anchor frame in the parent window.
 Public Sub PositionBySide(frmParent As Form, fraAnchor As Frame)
@@ -208,8 +209,9 @@ End Sub
 Public Sub PopulateFromRecordset(rs As ADODB.Recordset)
     Dim intIndex As Integer
     
-    ' Store the component ID.
-    m_lngID = rs.Fields("ID")
+    ' Store the component ID and quantity.
+    ID = rs.Fields("ID")
+    Quantity = rs.Fields("Quantity")
     
     ' Set text fields.
     txtName.Text = rs.Fields("Name")
@@ -303,8 +305,9 @@ End Sub
 ' Form just loaded up.
 Private Sub Form_Load()
     ' Reset variables.
-    m_lngID = -1
+    ID = -1
     DoAction = actNothing
+    Quantity = 0
 End Sub
 
 ' Gets the action to be taken.
@@ -315,4 +318,24 @@ End Property
 ' Sets the action to be taken.
 Public Property Let DoAction(actAction As Action)
     m_actAction = actAction
+End Property
+
+' Gets the duplicate component ID.
+Public Property Get ID() As Long
+    ID = m_lngID
+End Property
+
+' Sets the duplicate component ID.
+Public Property Let ID(lngID As Long)
+    m_lngID = lngID
+End Property
+
+' Gets the quantity of the duplicate component.
+Public Property Get Quantity() As Long
+    Quantity = m_lngQuantity
+End Property
+
+' Sets the quantity of the duplicate component.
+Public Property Let Quantity(lngQuantity)
+    m_lngQuantity = lngQuantity
 End Property
