@@ -526,22 +526,28 @@ Private Sub PopulateComboBoxes()
     LoadCategories cmbCategory
 End Sub
 
-' Check for existing component in the database and lets the user decide what to do.
-Private Sub CheckDuplicates(strName As String, _
-        Optional blnShowNoDuplicateDialog As Boolean = False)
+' Check for existing component in the database and lets the user decide what to do. Returns True if an abortion is needed.
+Private Function CheckDuplicates( _
+        Optional blnShowNoDuplicateDialog As Boolean = False) As Boolean
     Dim lngID As Long
     
+    ' Check if this is already an imported component.
+    If GetCurrentComponent.Exported Then
+        Exit Function
+    End If
+    
     ' Search for existing component.
-    lngID = FindExistingComponent(strName)
+    lngID = FindExistingComponent(txtName.Text)
     
     ' Nothing was found.
     If lngID = -1 Then
-        If Not blnShowNoDuplicateDialog Then
+        If blnShowNoDuplicateDialog Then
             MsgBox "No existing component with this name was found.", _
                 vbOKOnly + vbInformation, "Nothing to see here"
         End If
         
-        Exit Sub
+        CheckDuplicates = False
+        Exit Function
     End If
     
     ' We've got one!
@@ -553,8 +559,21 @@ Private Sub CheckDuplicates(strName As String, _
     If frmDuplicateComponent.DoAction = actImportAnyway Then
         ' Import this thing anyway.
         ImportCurrentComponent
+    ElseIf frmDuplicateComponent.DoAction = actUpdateQuantity Then
+        ' Update the quantity, we are just restocking.
+        UpdateComponentQuantity frmDuplicateComponent.ID, _
+            CLng(txtQuantity.Text) + frmDuplicateComponent.Quantity
+        
+        ' Make sure it's marked as exported.
+        GetCurrentComponent.Exported = True
+        RefreshCurrentComponent
+    Else
+        ' Abort any subsequent import operations.
+        CheckDuplicates = False
     End If
-End Sub
+    
+    CheckDuplicates = True
+End Function
 
 ' Imports the current component into the database.
 Private Sub ImportCurrentComponent()
@@ -581,7 +600,7 @@ Private Sub ImportCurrentComponent()
     
     ' Set the component as exported.
     component.Export
-    ShowComponent CLng(txtItemNumber.Text)
+    RefreshCurrentComponent
     
     ' Give the user some feedback.
     If component.Exported Then
@@ -645,6 +664,11 @@ End Sub
 Public Function GetCurrentComponent() As component
     Set GetCurrentComponent = GetComponent(CLng(txtItemNumber.Text))
 End Function
+
+' Refreshes the current component data.
+Public Sub RefreshCurrentComponent()
+    ShowComponent CLng(txtItemNumber.Text)
+End Sub
 
 ' Saves the text fields to the current component.
 Public Sub SaveCurrentComponent()
@@ -756,6 +780,11 @@ End Sub
 
 ' Import current component into the database.
 Private Sub cmdExport_Click()
+    ' Check for duplicates.
+    If CheckDuplicates Then
+        Exit Sub
+    End If
+    
     ImportCurrentComponent
 End Sub
 
@@ -928,7 +957,7 @@ End Sub
 
 ' Find existing component name clicked.
 Private Sub picFindExisting_Click()
-    CheckDuplicates txtName.Text
+    CheckDuplicates True
 End Sub
 
 ' Refresh categories button clicked.
