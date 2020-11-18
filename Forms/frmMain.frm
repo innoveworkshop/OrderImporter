@@ -7,11 +7,11 @@ Begin VB.Form frmMain
    ClientHeight    =   9120
    ClientLeft      =   165
    ClientTop       =   810
-   ClientWidth     =   7110
+   ClientWidth     =   7095
    Icon            =   "frmMain.frx":0000
    LinkTopic       =   "Form1"
    ScaleHeight     =   9120
-   ScaleWidth      =   7110
+   ScaleWidth      =   7095
    StartUpPosition =   3  'Windows Default
    Begin VB.Frame fraDatabase 
       Caption         =   "Database"
