@@ -58,6 +58,7 @@ Private Sub Main()
     
     frmMain.Show
     HandleArguments
+    SetupApplicationForDebug
     
     If hMod Then FreeLibrary hMod
 

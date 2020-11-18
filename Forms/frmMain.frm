@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{5E9E78A0-531B-11CF-91F6-C2863C385E30}#1.0#0"; "msflxgrd.ocx"
+Object = "{5E9E78A0-531B-11CF-91F6-C2863C385E30}#1.0#0"; "MSFLXGRD.OCX"
 Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmMain 
@@ -526,6 +526,32 @@ Private Sub PopulateComboBoxes()
     LoadCategories cmbCategory
 End Sub
 
+' Check for existing component in the database. Returns True if there's an unwanted duplicate.
+Private Function CheckDuplicates(strName As String, _
+        Optional blnShowNoDuplicateDialog As Boolean = False) As Boolean
+    Dim lngID As Long
+    
+    frmDuplicateComponent.Show vbModal, Me
+    Exit Function
+    
+    ' Search for existing component.
+    lngID = FindExistingComponent(strName)
+    
+    ' Nothing was found.
+    If lngID = -1 Then
+        If Not blnShowNoDuplicateDialog Then
+            MsgBox "No existing component with this name was found.", _
+                vbOKOnly + vbInformation, "Nothing to see here"
+        End If
+        
+        CheckDuplicates = False
+        Exit Function
+    End If
+    
+    ' We got one!
+    '
+End Function
+
 ' Imports the current component into the database.
 Private Sub ImportCurrentComponent()
     Dim component As component
@@ -898,7 +924,7 @@ End Sub
 
 ' Find existing component name clicked.
 Private Sub picFindExisting_Click()
-
+    CheckDuplicates txtName.Text
 End Sub
 
 ' Refresh categories button clicked.
