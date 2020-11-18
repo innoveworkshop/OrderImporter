@@ -2,7 +2,7 @@ VERSION 5.00
 Begin VB.Form frmDuplicateComponent 
    BorderStyle     =   3  'Fixed Dialog
    Caption         =   "Existing Component"
-   ClientHeight    =   3870
+   ClientHeight    =   3600
    ClientLeft      =   45
    ClientTop       =   390
    ClientWidth     =   6855
@@ -10,17 +10,41 @@ Begin VB.Form frmDuplicateComponent
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   3870
+   ScaleHeight     =   3600
    ScaleWidth      =   6855
    ShowInTaskbar   =   0   'False
    StartUpPosition =   3  'Windows Default
+   Begin VB.CommandButton cmdImportAnyway 
+      Caption         =   "Import As New"
+      Height          =   375
+      Left            =   1680
+      TabIndex        =   17
+      Top             =   3120
+      Width           =   1695
+   End
+   Begin VB.CommandButton cmdUpdateQuantity 
+      Caption         =   "Update Quantity"
+      Height          =   375
+      Left            =   3600
+      TabIndex        =   16
+      Top             =   3120
+      Width           =   1695
+   End
+   Begin VB.CommandButton cmdCancel 
+      Caption         =   "Cancel"
+      Height          =   375
+      Left            =   5520
+      TabIndex        =   15
+      Top             =   3120
+      Width           =   1215
+   End
    Begin VB.TextBox txtQuantity 
       Enabled         =   0   'False
       Height          =   315
       Left            =   2040
       TabIndex        =   6
       Text            =   "000000"
-      Top             =   360
+      Top             =   840
       Width           =   735
    End
    Begin VB.TextBox txtName 
@@ -29,7 +53,7 @@ Begin VB.Form frmDuplicateComponent
       Left            =   2880
       TabIndex        =   5
       Text            =   "Component Name"
-      Top             =   360
+      Top             =   840
       Width           =   3855
    End
    Begin VB.ComboBox cmbCategory 
@@ -38,7 +62,7 @@ Begin VB.Form frmDuplicateComponent
       Left            =   2040
       TabIndex        =   4
       Text            =   "Category"
-      Top             =   960
+      Top             =   1440
       Width           =   2295
    End
    Begin VB.ComboBox cmbSubCategory 
@@ -47,7 +71,7 @@ Begin VB.Form frmDuplicateComponent
       Left            =   4440
       TabIndex        =   3
       Text            =   "Sub-Category"
-      Top             =   960
+      Top             =   1440
       Width           =   2295
    End
    Begin VB.ComboBox cmbPackage 
@@ -56,7 +80,7 @@ Begin VB.Form frmDuplicateComponent
       Left            =   5400
       TabIndex        =   2
       Text            =   "Package"
-      Top             =   1560
+      Top             =   2040
       Width           =   1335
    End
    Begin VB.TextBox txtNotes 
@@ -65,7 +89,7 @@ Begin VB.Form frmDuplicateComponent
       Left            =   2040
       TabIndex        =   1
       Text            =   "Notes"
-      Top             =   1560
+      Top             =   2040
       Width           =   3255
    End
    Begin VB.PictureBox picImage 
@@ -77,15 +101,31 @@ Begin VB.Form frmDuplicateComponent
       ScaleHeight     =   1785
       ScaleWidth      =   1785
       TabIndex        =   0
-      Top             =   120
+      Top             =   600
       Width           =   1815
+   End
+   Begin VB.Label Label8 
+      Caption         =   "Do you want to import a new component with the same name as this one or just update the quantity of this existing component?"
+      Height          =   495
+      Left            =   120
+      TabIndex        =   14
+      Top             =   2520
+      Width           =   6615
+   End
+   Begin VB.Label Label7 
+      Caption         =   "We've found this existing component that matches the name of the component you're trying to import into the database:"
+      Height          =   495
+      Left            =   120
+      TabIndex        =   13
+      Top             =   120
+      Width           =   6615
    End
    Begin VB.Label Label1 
       Caption         =   "Qnt:"
       Height          =   255
       Left            =   2040
       TabIndex        =   12
-      Top             =   120
+      Top             =   600
       Width           =   495
    End
    Begin VB.Label Label2 
@@ -93,7 +133,7 @@ Begin VB.Form frmDuplicateComponent
       Height          =   255
       Left            =   2880
       TabIndex        =   11
-      Top             =   120
+      Top             =   600
       Width           =   615
    End
    Begin VB.Label Label3 
@@ -101,7 +141,7 @@ Begin VB.Form frmDuplicateComponent
       Height          =   255
       Left            =   2040
       TabIndex        =   10
-      Top             =   720
+      Top             =   1200
       Width           =   975
    End
    Begin VB.Label Label4 
@@ -109,7 +149,7 @@ Begin VB.Form frmDuplicateComponent
       Height          =   255
       Left            =   4440
       TabIndex        =   9
-      Top             =   720
+      Top             =   1200
       Width           =   1455
    End
    Begin VB.Label Label5 
@@ -117,7 +157,7 @@ Begin VB.Form frmDuplicateComponent
       Height          =   255
       Left            =   5400
       TabIndex        =   8
-      Top             =   1320
+      Top             =   1800
       Width           =   855
    End
    Begin VB.Label Label6 
@@ -125,7 +165,7 @@ Begin VB.Form frmDuplicateComponent
       Height          =   255
       Left            =   2040
       TabIndex        =   7
-      Top             =   1320
+      Top             =   1800
       Width           =   975
    End
 End
