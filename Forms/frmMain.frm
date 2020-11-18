@@ -526,15 +526,10 @@ Private Sub PopulateComboBoxes()
     LoadCategories cmbCategory
 End Sub
 
-' Check for existing component in the database. Returns True if there's an unwanted duplicate.
-Private Function CheckDuplicates(strName As String, _
-        Optional blnShowNoDuplicateDialog As Boolean = False) As Boolean
+' Check for existing component in the database and lets the user decide what to do.
+Private Sub CheckDuplicates(strName As String, _
+        Optional blnShowNoDuplicateDialog As Boolean = False)
     Dim lngID As Long
-    
-    frmDuplicateComponent.PositionBySide Me, fraComponent
-    LoadComponentDetail 10, frmDuplicateComponent
-    frmDuplicateComponent.Show vbModal, Me
-    Exit Function
     
     ' Search for existing component.
     lngID = FindExistingComponent(strName)
@@ -546,13 +541,20 @@ Private Function CheckDuplicates(strName As String, _
                 vbOKOnly + vbInformation, "Nothing to see here"
         End If
         
-        CheckDuplicates = False
-        Exit Function
+        Exit Sub
     End If
     
-    ' We got one!
-    '
-End Function
+    ' We've got one!
+    frmDuplicateComponent.PositionBySide Me, fraComponent
+    LoadComponentDetail lngID, frmDuplicateComponent
+    frmDuplicateComponent.Show vbModal, Me
+    
+    ' Check what sort of action we need to take.
+    If frmDuplicateComponent.DoAction = actImportAnyway Then
+        ' Import this thing anyway.
+        ImportCurrentComponent
+    End If
+End Sub
 
 ' Imports the current component into the database.
 Private Sub ImportCurrentComponent()
