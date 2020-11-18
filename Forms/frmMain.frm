@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{5E9E78A0-531B-11CF-91F6-C2863C385E30}#1.0#0"; "MSFLXGRD.OCX"
+Object = "{5E9E78A0-531B-11CF-91F6-C2863C385E30}#1.0#0"; "msflxgrd.ocx"
 Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmMain 
@@ -55,10 +55,14 @@ Begin VB.Form frmMain
       MaskColor       =   12632256
       _Version        =   393216
       BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
-         NumListImages   =   1
+         NumListImages   =   2
          BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
             Picture         =   "frmMain.frx":6852
             Key             =   "Refresh"
+         EndProperty
+         BeginProperty ListImage2 {2C247F27-8591-11D1-B16A-00C0F0283628} 
+            Picture         =   "frmMain.frx":D0B4
+            Key             =   "Find"
          EndProperty
       EndProperty
    End
@@ -76,6 +80,20 @@ Begin VB.Form frmMain
       TabIndex        =   7
       Top             =   2760
       Width           =   6855
+      Begin VB.PictureBox picFindExisting 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000004&
+         BorderStyle     =   0  'None
+         FillColor       =   &H80000005&
+         ForeColor       =   &H80000008&
+         Height          =   255
+         Left            =   2905
+         ScaleHeight     =   255
+         ScaleWidth      =   255
+         TabIndex        =   39
+         Top             =   510
+         Width           =   255
+      End
       Begin VB.PictureBox picRefreshPackages 
          Appearance      =   0  'Flat
          BackColor       =   &H80000004&
@@ -250,7 +268,7 @@ Begin VB.Form frmMain
          Left            =   120
          TabIndex        =   9
          Top             =   480
-         Width           =   3015
+         Width           =   2775
       End
       Begin VB.Label Label9 
          Caption         =   "Package:"
@@ -328,9 +346,9 @@ Begin VB.Form frmMain
       Begin VB.ComboBox cmbDistributor 
          Height          =   315
          Index           =   0
-         ItemData        =   "frmMain.frx":D0B4
+         ItemData        =   "frmMain.frx":13916
          Left            =   5040
-         List            =   "frmMain.frx":D0BB
+         List            =   "frmMain.frx":1391D
          TabIndex        =   5
          Text            =   "Farnell"
          Top             =   480
@@ -775,6 +793,7 @@ Private Sub Form_Load()
     grdProperties.ColWidth(1) = (grdProperties.Width / 2) - 5
     
     ' Setup the image buttons.
+    picFindExisting.Picture = imlButtons.ListImages("Find").ExtractIcon
     picRefreshCategories.Picture = imlButtons.ListImages("Refresh").ExtractIcon
     picRefreshSubCategories.Picture = imlButtons.ListImages("Refresh").ExtractIcon
     picRefreshPackages.Picture = imlButtons.ListImages("Refresh").ExtractIcon
@@ -875,6 +894,11 @@ End Sub
 Private Sub mniHelpAbout_Click()
     frmAbout.Parent = Me
     frmAbout.Show
+End Sub
+
+' Find existing component name clicked.
+Private Sub picFindExisting_Click()
+
 End Sub
 
 ' Refresh categories button clicked.
