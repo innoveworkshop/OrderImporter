@@ -1,5 +1,9 @@
 # Order Importer
 
+**ARCHIVED:** I've decided to merge this repository with
+[PartsCatalog](https://github.com/innoveworkshop/PartsCatalog). All future
+releases and code changes will be made in that repository.
+
 The easiest way to import a whole distributor order into a
 [PartsCatalog](https://github.com/innoveworkshop/PartsCatalog) database.
 
